@@ -72,28 +72,33 @@ function Face(cheek,nose,eyes,temples,mouth,sideRight) {
     this.colorOptions = [baseC,high,midd,dark,redEyes]
 
 
-    scale(0.25);
-
-push();
-  strokeWeight(0.1);
-  noFill();
-  stroke(255);
-  ellipse(0,-3,13,12);
-  // stroke(baseC);
-  beginShape();
-  vertex(6,-3); 
-  curveVertex(-5,-3);
-  curveVertex(-6.7,-1.5);
-  curveVertex(-5.5,6);
-  curveVertex(0,10);
-  curveVertex(5.5,6);
-  curveVertex(6.7,-1.5);
-endShape(CLOSE);
 
 
+this.draw_segment = function(segment, do_loop) {
+  for(let i=0; i<segment.length; i++) {
+      let px = segment[i][0];
+      let py = segment[i][1];
+      // ellipse(px, py, 0.1);
+      if(i < segment.length - 1) {
+        let nx = segment[i+1][0];
+        let ny = segment[i+1][1];
+        line(px, py, nx, ny);
+      }
+      else if(do_loop) {
+        let nx = segment[0][0];
+        let ny = segment[0][1];
+        line(px, py, nx, ny);
+      }
+  }
+};
+
+fill(255);
+stroke(255);
+this.draw_segment(positions.chin);
+
+scale(0.25);
 //-----------------------------------------------------------HIGHLIGHT-----------------------------
-
-// fill(high);
+push();
 noFill();
 stroke(100,200,100);//green
 beginShape();//nose forehead thing
@@ -120,7 +125,6 @@ curveVertex(1.8,4);
 curveVertex((-this.sideRight/2)+4,0);
 curveVertex(2,0);
 endShape(CLOSE);
-
 
 // --------------------SHADOWS-----------------------------MID-------------------------------
 
@@ -229,19 +233,30 @@ beginShape();//nose_______________
   curveVertex(-1,4.5);
   curveVertex(0,4.8)
 endShape(CLOSE);
+
 // if(evilness){
 //   fill(redEyes);
 // }
 // else(
 //   fill(dark)
 // )
+//////////////////////////////////////////////////////////////////////////////////////FIRST///////////////////////////////////////////////////////////////////////////////////
+this.leftEyeFar = positions.left_eye[0];// far left - 36
+this.leftEyeOne = positions.left_eye[1];
+this.leftEyeTwo = positions.left_eye[2]
+this.leftEyeClose = positions.left_eye[3];//far right - 39
+this.leftEyeFour = positions.left_eye[4]
+this.leftEyeBM = positions.left_eye[5];//left eye bottom middle - 41
+
 beginShape();//eye left_______________
-  vertex(-3,-0.4);
-  curveVertex(-3,-0.4);
-  curveVertex(-3.8,0);
-  curveVertex(-3+this.sideRight/2,0.8);//mid
-  curveVertex(-1.9,(this.eyes/1.3)-1);
-  curveVertex(-1.7,-0.1);
+curveVertex(this.leftEyeFar[0],this.leftEyeFar[1]);// far far left
+  // vertex(-3,-0.4);
+  curveVertex(-this.leftEyeOne[0],this.leftEyeOne[1]);
+  // curveVertex(-3+this.sideRight/2,0.8);//mid point bottom-
+  curveVertex(this.leftEyeTwo[0],this.leftEyeTwo[1]);
+  curveVertex(this.leftEyeClose[0],this.leftEyeClose[1]);//far far right
+  curveVertex(this.leftEyeFour[0],this.leftEyeFour[1])
+  curveVertex(this.leftEyeBM[0],this.leftEyeBM[1]);//mid point bottom-
 endShape(CLOSE);
 
 beginShape();//eye right_______________
@@ -253,7 +268,7 @@ beginShape();//eye right_______________
   curveVertex(1.7,-0.1);
 endShape(CLOSE);
 
-fill(dark);
+// fill(dark);
 beginShape();//temple left_________________
   vertex(-6.8,-1.5);
   curveVertex(-6.8,-1.5);
@@ -276,12 +291,13 @@ beginShape();//mouf__________________
   curveVertex(-1.9 ,7.2);
 endShape(CLOSE);
 
+// this.rightEyex = positions.right_eye[0][0];
+// this.rightEyey = positions.right_eye[0][1];
 
-
+// fill(255)
+// ellipse(this.rightEyex,this.rightEyey,1);
 
 pop();
-
-
 
 
   }
@@ -312,12 +328,12 @@ pop();
     // this.eye_shift = map(settings[1], 0, 100, -2, 2);
     // this.mouth_size = map(settings[2], 0, 100, 0.5, 8);
 
-    this.cheek = map(settings[1],0,100,3.5,4.2);
-    this.nose = map(settings[2],0,100,5.5,6);
-    this.eyes = map(settings[3],0,100,1.8,3);
-    this.temples =map(settings[4],0,100,4,5,);
-    this.mouth =map(settings[5],0,100,7.2,8);
-    this.sideRight = map(settings[6],0,100,-1,1);
+    this.cheek = map(settings[0],0,100,3.5,4.2);
+    this.nose = map(settings[1],0,100,5.5,6);
+    this.eyes = map(settings[2],0,100,1.8,3);
+    this.temples =map(settings[3],0,100,4,5,);
+    this.mouth =map(settings[4],0,100,7.2,8);
+    this.sideRight = map(settings[5],0,100,-1,1);
     // this.redEyes = map(settings[9],0,100,0,300);
 
     
@@ -331,12 +347,12 @@ pop();
     // settings[2] = map(this.mouth_size, 0.5, 8, 0, 100);
 
 
-    settings[1] = map(this.cheek,3.5,4.2,0,100);
-    settings[2]=map(this.nose,5.5,6,0,100);
-    settings[3]=map(this.eyes,1.8,3,0,100);
-    settings[4]=map(this.temples,4,5,0,100);
-    settings[5]=map(this.mouth,7.2,8,0,100);
-    settings[6]=map(this.sideRight,-1,1,0,100);
+    settings[0] = map(this.cheek,3.5,4.2,0,100);
+    settings[1]=map(this.nose,5.5,6,0,100);
+    settings[2]=map(this.eyes,1.8,3,0,100);
+    settings[3]=map(this.temples,4,5,0,100);
+    settings[4]=map(this.mouth,7.2,8,0,100);
+    settings[5]=map(this.sideRight,-1,1,0,100);
     // settings[9]=map(this.redEyes,0,300,0,100);
 
     return settings;
@@ -364,9 +380,9 @@ pop();
     // this.draw_segment(positions.right_eyebrow);
 
   //   // draw the chin segment using points
-  //   fill(this.chinColour);
-  //   stroke(this.chinColour);
-  //   this.draw_segment(positions.chin);
+    // fill(this.chinColour);
+    // stroke(this.chinColour);
+    // this.draw_segment(positions.chin);
 
   //   fill(100, 0, 100);
   //   stroke(100, 0, 100);
