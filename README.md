@@ -2,6 +2,4 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=11125326&assignment_repo_type=AssignmentRepo)
 ## 2023 MDDN342 Assignment 3: Data Mappings
 
-REPLACE ALL TEXT IN THIS FILE
-
-This README should be used to document your design.
+So for this first part of this assignment I've just been plugging the previous face into this code. It sits in normally now, after some trial and error, but I have chnged the colours. I've removed the fill or all the shapes and then I've made all the strokes different neons. I did this so that I can easily see the different shapes and hopefully it should help me to be able to move everything to the correct spot. I'm going to try and get at least some of the face moving around today, usng some of the techniques Phoebe showed me in class.
