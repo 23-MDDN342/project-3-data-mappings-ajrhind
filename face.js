@@ -74,8 +74,10 @@ function Face(cheek,nose,eyes,temples,mouth,sideRight) {
 
 
 strokeWeight(0.01)
-this.draw_segment = function(segment, do_loop) {
-  for(let i=0; i<segment.length; i++) {
+
+//right chin_____________________________________________
+this.draw_segmentRight = function(segment) {
+  for(let i=9; i<segment.length; i++) {
       let px = segment[i][0];
       let py = segment[i][1];
       // ellipse(px, py, 0.1);
@@ -84,81 +86,89 @@ this.draw_segment = function(segment, do_loop) {
         let ny = segment[i+1][1];
         line(px, py, nx, ny);
       }
-      else if(do_loop) {
-        let nx = segment[0][0];
-        let ny = segment[0][1];
+  }
+};
+
+//left__________________________________________________
+this.draw_segmentLeft = function(segment) {
+  for(let i=0 ; i<7; i++) {
+      let px = segment[i][0];
+      let py = segment[i][1];
+      // ellipse(px, py, 0.1);
+      if(i < segment.length - 1) {
+        let nx = segment[i+1][0];
+        let ny = segment[i+1][1];
         line(px, py, nx, ny);
       }
   }
 };
 
-
-
 fill(255);
 stroke(255);
-this.draw_segment(positions.chin);
-this.draw_segment(positions.left_eye)
-this.draw_segment(positions.right_eye);
-this.draw_segment(positions.left_eyebrow);
-this.draw_segment(positions.right_eyebrow);
-this.draw_segment(positions.nose_bridge);
-this.draw_segment(positions.nose_tip);
-this.draw_segment(positions.top_lip);
+this.draw_segmentRight(positions.chin);
+this.draw_segmentLeft(positions.chin);
+// this.draw_segment(positions.left_eye)
+// this.draw_segment(positions.right_eye);
+// this.draw_segment(positions.left_eyebrow);
+// this.draw_segment(positions.right_eyebrow);
+// this.draw_segment(positions.nose_bridge);
+// this.draw_segment(positions.nose_tip);
+// this.draw_segment(positions.top_lip);
 
 // scale(0.25);
 
 
-//a=face============================================================================================
+//cool code i can use============================================================================================
 // this.pointsAvarage = segment_average([positions.left_eye[4],positions.left_eye[5]]);
 // console.log(this.pointsAvarage )
 // ellipse(this.pointsAvarage[0],this.pointsAvarage[1],0.3,0.3 )
 
+// this.draw_segmentLeft = function(segment) {//this makes a cool effect
+//   for(let i=0; i<segment.length; i++) {
+//       let px = segment[i][0];
+//       let py = segment[i][1];
 
+//       if(i < segment.length - 1) {
+//         let nx = segment[i+1][0];
+//         let ny = segment[i][1];
+//         line(px, py, nx, ny);
+//       }
+//   }
+// }
 
-// //eye left___________________________________________________________36-41
-// this.leftEyeFar = positions.left_eye[0];// far left - 36
-// this.leftEyeOne = positions.left_eye[1];
-// this.leftEyeTwo = positions.left_eye[2]
-// this.leftEyeClose = positions.left_eye[3];//far right - 39
-// this.leftEyeFour = positions.left_eye[4]
-// this.leftEyeBM = positions.left_eye[5];//left eye bottom middle - 41
+noFill();
 
-// beginShape();
-// curveVertex(this.leftEyeFar[0],this.leftEyeFar[1]);// far far left
-//   curveVertex(this.leftEyeOne[0],this.leftEyeOne[1]);
-//   curveVertex(this.leftEyeTwo[0],this.leftEyeTwo[1]);
-//   curveVertex(this.leftEyeClose[0],this.leftEyeClose[1]);//far far right
-//   curveVertex(this.leftEyeFour[0],this.leftEyeFour[1])
-//   curveVertex(this.leftEyeBM[0],this.leftEyeBM[1]);//mid point bottom-
-// endShape(CLOSE);
-this.leftEye = positions.left_eye;
-
-
+this.leftEye = positions.left_eye;//------------------
   beginShape();
   for(let i =0; i<this.leftEye.length; i++){
   curveVertex(this.leftEye[i][0],this.leftEye[i][1]);// far far left
-   // curveVertex(this.leftEyeOne[0],this.leftEyeOne[1]);
-  }
-  endShape(CLOSE);
+}
+endShape(CLOSE);
 
-this.rightEye = positions.right_eye;
-
-beginShape();
-for(let i =0; i<this.rightEye.length; i++){
+this.rightEye = positions.right_eye;//------------------
+  beginShape();
+  for(let i =0; i<this.rightEye.length; i++){
   curveVertex(this.rightEye[i][0], this.rightEye[i][1]);
 }
 endShape(CLOSE);
 
-this.topLip = positions.top_lip;
-
-beginShape();
-for(let i = 0; i<this.topLip.length; i++){
+this.topLip = positions.top_lip;//------------------------
+  beginShape();
+  for(let i = 0; i<this.topLip.length; i++){
   curveVertex(this.topLip[i][0],this.topLip[i][1]);
 }
 endShape(CLOSE);
 
-//eye right__________________________________________________________42-47
-//this.
+this.bottomLip = positions.bottom_lip;//----------------------
+  beginShape();
+  for(let i = 0; i<this.bottomLip.length; i++){
+  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
+}
+endShape(CLOSE);
+
+// this.pointsAvarage = segment_average([positions.left_eye[4],positions.left_eye[5]]);
+// console.log(this.pointsAvarage )
+// ellipse(this.pointsAvarage[0],this.pointsAvarage[1],0.3,0.3 )
 
 
 
@@ -369,26 +379,26 @@ endShape(CLOSE);
 
   // example of a function *inside* the face object.
   // this draws a segment, and do_loop will connect the ends if true
-  this.draw_segment = function(segment, do_loop) {
-    for(let i=0; i<segment.length; i++) {
-        let px = segment[i][0];
-        let py = segment[i][1];
-        ellipse(px, py, 0.1);
+  // this.draw_segment = function(segment, do_loop) {
+  //   for(let i=0; i<segment.length; i++) {
+  //       let px = segment[i][0];
+  //       let py = segment[i][1];
+  //       ellipse(px, py, 0.1);
 
 
 
-        if(i < segment.length - 1) {
-          let nx = segment[i+1][0];
-          let ny = segment[i+1][1];
-          line(px, py, nx, ny);
-        }
-        else if(do_loop) {
-          let nx = segment[0][0];
-          let ny = segment[0][1];
-          line(px, py, nx, ny);
-        }
-    }
-  };
+  //       if(i < segment.length - 1) {
+  //         let nx = segment[i+1][0];
+  //         let ny = segment[i+1][1];
+  //         line(px, py, nx, ny);
+  //       }
+  //       else if(do_loop) {
+  //         let nx = segment[0][0];
+  //         let ny = segment[0][1];
+  //         line(px, py, nx, ny);
+  //       }
+  //   }
+  // };
 
   /* set internal properties based on list numbers 0-100 */
   this.setProperties = function(settings) {
