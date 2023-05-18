@@ -73,7 +73,7 @@ function Face(cheek,nose,eyes,temples,mouth,sideRight) {
 
 
 
-
+strokeWeight(0.01)
 this.draw_segment = function(segment, do_loop) {
   for(let i=0; i<segment.length; i++) {
       let px = segment[i][0];
@@ -92,212 +92,277 @@ this.draw_segment = function(segment, do_loop) {
   }
 };
 
+
+
 fill(255);
 stroke(255);
 this.draw_segment(positions.chin);
+this.draw_segment(positions.left_eye)
+this.draw_segment(positions.right_eye);
+this.draw_segment(positions.left_eyebrow);
+this.draw_segment(positions.right_eyebrow);
+this.draw_segment(positions.nose_bridge);
+this.draw_segment(positions.nose_tip);
+this.draw_segment(positions.top_lip);
 
-scale(0.25);
+// scale(0.25);
+
+
+//a=face============================================================================================
+// this.pointsAvarage = segment_average([positions.left_eye[4],positions.left_eye[5]]);
+// console.log(this.pointsAvarage )
+// ellipse(this.pointsAvarage[0],this.pointsAvarage[1],0.3,0.3 )
+
+
+
+// //eye left___________________________________________________________36-41
+// this.leftEyeFar = positions.left_eye[0];// far left - 36
+// this.leftEyeOne = positions.left_eye[1];
+// this.leftEyeTwo = positions.left_eye[2]
+// this.leftEyeClose = positions.left_eye[3];//far right - 39
+// this.leftEyeFour = positions.left_eye[4]
+// this.leftEyeBM = positions.left_eye[5];//left eye bottom middle - 41
+
+// beginShape();
+// curveVertex(this.leftEyeFar[0],this.leftEyeFar[1]);// far far left
+//   curveVertex(this.leftEyeOne[0],this.leftEyeOne[1]);
+//   curveVertex(this.leftEyeTwo[0],this.leftEyeTwo[1]);
+//   curveVertex(this.leftEyeClose[0],this.leftEyeClose[1]);//far far right
+//   curveVertex(this.leftEyeFour[0],this.leftEyeFour[1])
+//   curveVertex(this.leftEyeBM[0],this.leftEyeBM[1]);//mid point bottom-
+// endShape(CLOSE);
+this.leftEye = positions.left_eye;
+
+
+  beginShape();
+  for(let i =0; i<this.leftEye.length; i++){
+  curveVertex(this.leftEye[i][0],this.leftEye[i][1]);// far far left
+   // curveVertex(this.leftEyeOne[0],this.leftEyeOne[1]);
+  }
+  endShape(CLOSE);
+
+this.rightEye = positions.right_eye;
+
+beginShape();
+for(let i =0; i<this.rightEye.length; i++){
+  curveVertex(this.rightEye[i][0], this.rightEye[i][1]);
+}
+endShape(CLOSE);
+
+this.topLip = positions.top_lip;
+
+beginShape();
+for(let i = 0; i<this.topLip.length; i++){
+  curveVertex(this.topLip[i][0],this.topLip[i][1]);
+}
+endShape(CLOSE);
+
+//eye right__________________________________________________________42-47
+//this.
+
+
+
 //-----------------------------------------------------------HIGHLIGHT-----------------------------
-push();
-noFill();
-stroke(100,200,100);//green
-beginShape();//nose forehead thing
-vertex(-0.3,1);
-curveVertex(-0.3,1);
-curveVertex(-0.5,3.5);//bottom left
-curveVertex(0.5,3.5);//bottom right
-curveVertex(0.3,1);
-curveVertex(-this.sideRight/2+1,-1.6);//left top
-curveVertex(-this.sideRight/2,-3);//top mid 
-curveVertex(-this.sideRight/2-1,-1.6);//top right
-endShape(CLOSE);
+// push();
+// noFill();
+// stroke(100,200,100);//green
+// beginShape();//nose forehead thing
+// vertex(-0.3,1);
+// curveVertex(-0.3,1);
+// curveVertex(-0.5,3.5);//bottom left
+// curveVertex(0.5,3.5);//bottom right
+// curveVertex(0.3,1);
+// curveVertex(-this.sideRight/2+1,-1.6);//left top
+// curveVertex(-this.sideRight/2,-3);//top mid 
+// curveVertex(-this.sideRight/2-1,-1.6);//top right
+// endShape(CLOSE);
 
-beginShape();//cheek left
-curveVertex(-1,1);
-curveVertex(-1.8,4);
-curveVertex((-this.sideRight/2)-4,0);
-curveVertex(-2,0);
-endShape(CLOSE);
+// beginShape();//cheek left
+// curveVertex(-1,1);
+// curveVertex(-1.8,4);
+// curveVertex((-this.sideRight/2)-4,0);
+// curveVertex(-2,0);
+// endShape(CLOSE);
 
-beginShape();//cheek right
-curveVertex(1,1);
-curveVertex(1.8,4);
-curveVertex((-this.sideRight/2)+4,0);
-curveVertex(2,0);
-endShape(CLOSE);
+// beginShape();//cheek right
+// curveVertex(1,1);
+// curveVertex(1.8,4);
+// curveVertex((-this.sideRight/2)+4,0);
+// curveVertex(2,0);
+// endShape(CLOSE);
 
-// --------------------SHADOWS-----------------------------MID-------------------------------
+// // --------------------SHADOWS-----------------------------MID-------------------------------
 
-noFill();
-stroke(200,100,100);//pink
-strokeWeight(0.05);
-beginShape();//left cheek____________
-  vertex(-6.8,0);
-  curveVertex(-6.8,0);
-  curveVertex(-5.7,6);
-  vertex(-2.2,9.2);
-  curveVertex(-this.cheek-this.sideRight/1.5,4);
-endShape(CLOSE);
+// noFill();
+// stroke(200,100,100);//pink
+// strokeWeight(0.05);
+// beginShape();//left cheek____________
+//   vertex(-6.8,0);
+//   curveVertex(-6.8,0);
+//   curveVertex(-5.7,6);
+//   vertex(-2.2,9.2);
+//   curveVertex(-this.cheek-this.sideRight/1.5,4);
+// endShape(CLOSE);
 
-beginShape();//right cheek___________
-  vertex(6.8,0);
-  curveVertex(6.8,0);
-  curveVertex(5.7,6);
-  vertex(2.2,9.2);
-  curveVertex(this.cheek-this.sideRight/1.5,4);
-endShape(CLOSE);
+// beginShape();//right cheek___________
+//   vertex(6.8,0);
+//   curveVertex(6.8,0);
+//   curveVertex(5.7,6);
+//   vertex(2.2,9.2);
+//   curveVertex(this.cheek-this.sideRight/1.5,4);
+// endShape(CLOSE);
 
-beginShape();//nose_______________
-  vertex(0,4);//mid
-  curveVertex(0,4);
-  curveVertex(1.5,4);
-  curveVertex(1.5+this.sideRight/2,5);
-  curveVertex(this.sideRight+0.7,this.nose)//====================================================================================================
-  curveVertex(this.sideRight-0.7,this.nose);//mid
-  curveVertex(-1.5+this.sideRight/3,5);
-  curveVertex(-1.5,4);
-  curveVertex(0,4)
-endShape(CLOSE);
+// beginShape();//nose_______________
+//   vertex(0,4);//mid
+//   curveVertex(0,4);
+//   curveVertex(1.5,4);
+//   curveVertex(1.5+this.sideRight/2,5);
+//   curveVertex(this.sideRight+0.7,this.nose)//=======
+//   curveVertex(this.sideRight-0.7,this.nose);//mid
+//   curveVertex(-1.5+this.sideRight/3,5);
+//   curveVertex(-1.5,4);
+//   curveVertex(0,4)
+// endShape(CLOSE);
 
-beginShape();//eye left_______________
-  vertex(-3.5,-1);
-  curveVertex(-4,-1);
-  curveVertex(-5,-0);
-  curveVertex(-4.5+this.sideRight/2,1.5);//mid
-  curveVertex(-1.75,this.eyes-0.1);
-  curveVertex(-1,1.5); 
-  curveVertex(-1.5,-0.5);
-endShape(CLOSE);
+// beginShape();//eye left_______________
+//   vertex(-3.5,-1);
+//   curveVertex(-4,-1);
+//   curveVertex(-5,-0);
+//   curveVertex(-4.5+this.sideRight/2,1.5);//mid
+//   curveVertex(-1.75,this.eyes-0.1);
+//   curveVertex(-1,1.5); 
+//   curveVertex(-1.5,-0.5);
+// endShape(CLOSE);
 
-beginShape();//eye right_______________
-  vertex(3.5,-1);
-  curveVertex(4,-1);
-  curveVertex(5,0);
-  curveVertex(4.5+this.sideRight/2,1.5)//mid
-  curveVertex(1.75,this.eyes-0.1);
-  curveVertex(1,1.5);
-  curveVertex(1.5,-0.5);
-endShape(CLOSE);
+// beginShape();//eye right_______________
+//   vertex(3.5,-1);
+//   curveVertex(4,-1);
+//   curveVertex(5,0);
+//   curveVertex(4.5+this.sideRight/2,1.5)//mid
+//   curveVertex(1.75,this.eyes-0.1);
+//   curveVertex(1,1.5);
+//   curveVertex(1.5,-0.5);
+// endShape(CLOSE);
 
-beginShape();//temple left_________________
-  vertex(-6.85,-1);
-  curveVertex(-6.85,-1);
-  curveVertex(-this.temples-this.sideRight/2,-4);
-  curveVertex(-5.4,-6);
-  curveVertex(-6.4,-4.3);
-endShape(CLOSE);
+// beginShape();//temple left_________________
+//   vertex(-6.85,-1);
+//   curveVertex(-6.85,-1);
+//   curveVertex(-this.temples-this.sideRight/2,-4);
+//   curveVertex(-5.4,-6);
+//   curveVertex(-6.4,-4.3);
+// endShape(CLOSE);
 
-beginShape();//temple right___________________
-  vertex(6.85,-1);
-  curveVertex(6.85,-1);
-  curveVertex(this.temples-this.sideRight/2,-4);
-  curveVertex(5.4,-6);
-  curveVertex(6.4,-4.3);
-endShape(CLOSE);
+// beginShape();//temple right___________________
+//   vertex(6.85,-1);
+//   curveVertex(6.85,-1);
+//   curveVertex(this.temples-this.sideRight/2,-4);
+//   curveVertex(5.4,-6);
+//   curveVertex(6.4,-4.3);
+// endShape(CLOSE);
 
-beginShape();//mouf__________________
-  curveVertex(-1,6.5);
-  curveVertex(1,6.5);
-  vertex(1.9,7.2);
-  curveVertex(this.sideRight,this.mouth);//===================================================================================================
-  curveVertex(-1.9 ,7.2);
-endShape(CLOSE);
+// beginShape();//mouf__________________
+//   curveVertex(-1,6.5);
+//   curveVertex(1,6.5);
+//   vertex(1.9,7.2);
+//   curveVertex(this.sideRight,this.mouth);//
+//   curveVertex(-1.9 ,7.2);
+// endShape(CLOSE);
 
-//--------------------------------------------------------------DARK---------------------------
-noFill();
-stroke(100,100,200);//blue
-strokeWeight(0.05);
-beginShape();//left cheek____________
-  vertex(-6.6,2);
-  curveVertex(-6.6,2);
-  curveVertex(-5.7,6);
-  vertex(-4,7.8);
-  curveVertex(-(this.cheek*1.3)-this.sideRight/1.5,4);
-endShape(CLOSE);
+// //--------------------------------------------------------------DARK---------------------------
+// noFill();
+// stroke(100,100,200);//blue
+// strokeWeight(0.05);
+// beginShape();//left cheek____________
+//   vertex(-6.6,2);
+//   curveVertex(-6.6,2);
+//   curveVertex(-5.7,6);
+//   vertex(-4,7.8);
+//   curveVertex(-(this.cheek*1.3)-this.sideRight/1.5,4);
+// endShape(CLOSE);
 
-beginShape();//right cheek___________
-  vertex(6.6,2);
-  curveVertex(6.6,2);
-  curveVertex(5.7,6);
-  vertex(4,7.8);
-  curveVertex((this.cheek*1.3)-this.sideRight/1.5,4);
-endShape(CLOSE);
+// beginShape();//right cheek___________
+//   vertex(6.6,2);
+//   curveVertex(6.6,2);
+//   curveVertex(5.7,6);
+//   vertex(4,7.8);
+//   curveVertex((this.cheek*1.3)-this.sideRight/1.5,4);
+// endShape(CLOSE);
 
-beginShape();//nose_______________
-  vertex(0,4.8);//mid
-  curveVertex(1,4.5);
-  curveVertex(1+this.sideRight/2,5);
-  curveVertex(this.sideRight+0.4,this.nose-0.1)
-  curveVertex(this.sideRight-0.4,this.nose-0.1);//mid
-  curveVertex(-1+this.sideRight/3,5);
-  curveVertex(-1,4.5);
-  curveVertex(0,4.8)
-endShape(CLOSE);
+// beginShape();//nose_______________
+//   vertex(0,4.8);//mid
+//   curveVertex(1,4.5);
+//   curveVertex(1+this.sideRight/2,5);
+//   curveVertex(this.sideRight+0.4,this.nose-0.1)
+//   curveVertex(this.sideRight-0.4,this.nose-0.1);//mid
+//   curveVertex(-1+this.sideRight/3,5);
+//   curveVertex(-1,4.5);
+//   curveVertex(0,4.8)
+// endShape(CLOSE);
 
-// if(evilness){
-//   fill(redEyes);
-// }
-// else(
-//   fill(dark)
-// )
-//////////////////////////////////////////////////////////////////////////////////////FIRST///////////////////////////////////////////////////////////////////////////////////
-this.leftEyeFar = positions.left_eye[0];// far left - 36
-this.leftEyeOne = positions.left_eye[1];
-this.leftEyeTwo = positions.left_eye[2]
-this.leftEyeClose = positions.left_eye[3];//far right - 39
-this.leftEyeFour = positions.left_eye[4]
-this.leftEyeBM = positions.left_eye[5];//left eye bottom middle - 41
+// // if(evilness){
+// //   fill(redEyes);
+// // }
+// // else(
+// //   fill(dark)
+// // )
+// //////////////////////////////////////////////////////////////////////////////////////FIRST///////////////////////////////////////////////////////////////////////////////////
+// this.leftEyeFar = positions.left_eye[0];// far left - 36
+// this.leftEyeOne = positions.left_eye[1];
+// this.leftEyeTwo = positions.left_eye[2]
+// this.leftEyeClose = positions.left_eye[3];//far right - 39
+// this.leftEyeFour = positions.left_eye[4]
+// this.leftEyeBM = positions.left_eye[5];//left eye bottom middle - 41
 
-beginShape();//eye left_______________
-curveVertex(this.leftEyeFar[0],this.leftEyeFar[1]);// far far left
-  // vertex(-3,-0.4);
-  curveVertex(-this.leftEyeOne[0],this.leftEyeOne[1]);
-  // curveVertex(-3+this.sideRight/2,0.8);//mid point bottom-
-  curveVertex(this.leftEyeTwo[0],this.leftEyeTwo[1]);
-  curveVertex(this.leftEyeClose[0],this.leftEyeClose[1]);//far far right
-  curveVertex(this.leftEyeFour[0],this.leftEyeFour[1])
-  curveVertex(this.leftEyeBM[0],this.leftEyeBM[1]);//mid point bottom-
-endShape(CLOSE);
+// beginShape();//eye left_______________
+// curveVertex(this.leftEyeFar[0],this.leftEyeFar[1]);// far far left
+//   // vertex(-3,-0.4);
+//   curveVertex(-this.leftEyeOne[0],this.leftEyeOne[1]);
+//   // curveVertex(-3+this.sideRight/2,0.8);//mid point bottom-
+//   curveVertex(this.leftEyeTwo[0],this.leftEyeTwo[1]);
+//   curveVertex(this.leftEyeClose[0],this.leftEyeClose[1]);//far far right
+//   curveVertex(this.leftEyeFour[0],this.leftEyeFour[1])
+//   curveVertex(this.leftEyeBM[0],this.leftEyeBM[1]);//mid point bottom-
+// endShape(CLOSE);
 
-beginShape();//eye right_______________
-  vertex(3,-0.4);
-  curveVertex(3,-0.4);
-  curveVertex(3.8,0);
-  curveVertex(3+this.sideRight/2,0.8)//mid
-  curveVertex(1.9,(this.eyes/1.3)-1);
-  curveVertex(1.7,-0.1);
-endShape(CLOSE);
+// beginShape();//eye right_______________
+//   vertex(3,-0.4);
+//   curveVertex(3,-0.4);
+//   curveVertex(3.8,0);
+//   curveVertex(3+this.sideRight/2,0.8)//mid
+//   curveVertex(1.9,(this.eyes/1.3)-1);
+//   curveVertex(1.7,-0.1);
+// endShape(CLOSE);
 
-// fill(dark);
-beginShape();//temple left_________________
-  vertex(-6.8,-1.5);
-  curveVertex(-6.8,-1.5);
-  curveVertex((-this.temples-1)-this.sideRight/2,-4);
-  curveVertex(-6.3,-4.5);
-endShape(CLOSE);
+// // fill(dark);
+// beginShape();//temple left_________________
+//   vertex(-6.8,-1.5);
+//   curveVertex(-6.8,-1.5);
+//   curveVertex((-this.temples-1)-this.sideRight/2,-4);
+//   curveVertex(-6.3,-4.5);
+// endShape(CLOSE);
 
-beginShape();//temple right___________________
-  vertex(6.8,-1.5);
-  curveVertex(6.8,-1.5);
-  curveVertex((this.temples+1)-this.sideRight/2,-4);
-  curveVertex(6.3,-4.5);
-endShape(CLOSE);
+// beginShape();//temple right___________________
+//   vertex(6.8,-1.5);
+//   curveVertex(6.8,-1.5);
+//   curveVertex((this.temples+1)-this.sideRight/2,-4);
+//   curveVertex(6.3,-4.5);
+// endShape(CLOSE);
 
-beginShape();//mouf__________________
-  curveVertex(-1,6.6);
-  curveVertex(1,6.6);
-  vertex(1.9,7.2);
-  curveVertex(0,7);
-  curveVertex(-1.9 ,7.2);
-endShape(CLOSE);
+// beginShape();//mouf__________________
+//   curveVertex(-1,6.6);
+//   curveVertex(1,6.6);
+//   vertex(1.9,7.2);
+//   curveVertex(0,7);
+//   curveVertex(-1.9 ,7.2);
+// endShape(CLOSE);
 
-// this.rightEyex = positions.right_eye[0][0];
-// this.rightEyey = positions.right_eye[0][1];
+// // this.rightEyex = positions.right_eye[0][0];
+// // this.rightEyey = positions.right_eye[0][1];
 
-// fill(255)
-// ellipse(this.rightEyex,this.rightEyey,1);
+// // fill(255)
+// // ellipse(this.rightEyex,this.rightEyey,1);
 
-pop();
+// pop();
 
 
   }
@@ -309,6 +374,9 @@ pop();
         let px = segment[i][0];
         let py = segment[i][1];
         ellipse(px, py, 0.1);
+
+
+
         if(i < segment.length - 1) {
           let nx = segment[i+1][0];
           let ny = segment[i+1][1];
