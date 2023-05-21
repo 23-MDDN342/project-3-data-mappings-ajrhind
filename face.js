@@ -86,6 +86,7 @@ this.draw_segmentRight = function(segment) {
         let ny = segment[i+1][1];
         line(px, py, nx, ny);
       }
+    
   }
 };
 
@@ -103,10 +104,12 @@ this.draw_segmentLeft = function(segment) {
   }
 };
 
+
 fill(255);
 stroke(255);
 this.draw_segmentRight(positions.chin);
 this.draw_segmentLeft(positions.chin);
+// this.draw_segmentbottomLip(positions.bottom_lip);
 // this.draw_segment(positions.left_eye)
 // this.draw_segment(positions.right_eye);
 // this.draw_segment(positions.left_eyebrow);
@@ -159,17 +162,58 @@ this.topLip = positions.top_lip;//------------------------
 }
 endShape(CLOSE);
 
-this.bottomLip = positions.bottom_lip;//----------------------
-  beginShape();
-  for(let i = 0; i<this.bottomLip.length; i++){
+
+
+
+stroke(100,200,100)
+this.bottomLip = positions.bottom_lip;//----------------------Bottom Lip
+beginShape();
+for(let i =0;i<this.bottomLip.length; i++){
+  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1])
+}endShape(CLOSE);
+
+strokeWeight(0.04);
+beginShape();//bottom part
+for(let i = 0; i<7; i++){
+  if(length>1||length<6){
   curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
-}
-endShape(CLOSE);
+} }
+endShape();
+beginShape();//top part
+for(let i = 7; i<12; i++){
+  if(length>8||length<10){
+  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
+} }
+endShape();
 
-// this.pointsAvarage = segment_average([positions.left_eye[4],positions.left_eye[5]]);
-// console.log(this.pointsAvarage )
-// ellipse(this.pointsAvarage[0],this.pointsAvarage[1],0.3,0.3 )
 
+this.cheekbone = segment_average([positions.bottom_lip[0],positions.chin[14]]);
+// console.log(this.pointsAverage )
+// ellipse(this.cheekbone[0],this.cheekbone[1],0.3,0.3 )
+
+this.lowCheekbone = segment_average([positions.bottom_lip[0],positions.chin[9]])
+// ellipse(this.lowCheekbone[0],this.lowCheekbone[1],0.2)
+
+this.topCheekbone = positions.chin[16];
+this.chinCheek = positions.chin[9]
+
+beginShape();
+curveVertex(this.topCheekbone[0],this.topCheekbone[1]);
+curveVertex(this.topCheekbone[0],this.topCheekbone[1]);
+curveVertex(this.cheekbone[0],this.cheekbone[1]);
+curveVertex(this.lowCheekbone[0],this.lowCheekbone[1]);
+curveVertex(this.chinCheek[0],this.chinCheek[1]);
+curveVertex(this.chinCheek[0],this.chinCheek[1]);
+
+endShape();
+
+// this.bottomlipLeft = positions.bottom_lip[5];
+// this.bottomlipRight = positions.bottom_lip[1];
+
+// beginShape();
+// curveVertex(this.bottomlipLeft[0],this.bottomlipLeft[1]);
+// curveVertex(this.bottomlipRight[0],this.bottomlipRight[1]);
+// endShape(CLOSE);
 
 
 //-----------------------------------------------------------HIGHLIGHT-----------------------------
