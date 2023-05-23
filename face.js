@@ -192,9 +192,12 @@ stroke(100,200,100)
 
 this.leftCheek = positions.chin;//-----left---------
   beginShape();
+  // curveVertex(this.leftCheek[0][0],this.leftCheek[0][1]);
+
   for(let i =0; i<9 ; i++){
   curveVertex(this.leftCheek[i][0],this.leftCheek[i][1]);
 }
+
 endShape();
 
 this.rightCheek = positions.chin;//right
