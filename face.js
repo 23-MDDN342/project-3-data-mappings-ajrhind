@@ -63,13 +63,11 @@ function Face(cheek,nose,eyes,temples,mouth,sideRight) {
     // console.log()
 
   
-    const baseC = 115;
-    const high = 130;
-    const midd = 80;
-    const dark = 60;
-    const redEyes = color(171, 14, 3);
-
-    this.colorOptions = [baseC,high,midd,dark,redEyes]
+  const landmark = color(100,200,100);
+  let highlight = color(250, 182, 182,125);
+  const highlightS = color(200,100,100);
+  const shadow = color(100,100,200);
+    this.colorOptions = [landmark,highlight,shadow]
 
 
 
@@ -84,6 +82,18 @@ this.draw_segmentMess = function(segment) {//this makes a cool effect//it looks 
       if(i < segment.length - 1) {
         let nx = segment[16][0];
         let ny = segment[0][1];
+        line(px, py, nx, ny);
+      }
+  }
+}
+this.draw_segmentMess2 = function(segment) {//this makes a cool effect//it looks like cross hatching
+  for(let i=9; i<segment.length; i++) {
+      let px = segment[i][0];
+      let py = segment[i][1];
+
+      if(i < segment.length - 1) {
+        let nx = segment[9][0];
+        let ny = segment[5][1];
         line(px, py, nx, ny);
       }
   }
@@ -113,7 +123,7 @@ this.draw_segment = function(segment, do_loop) {
 fill(255);
 stroke(255);
 
-// this.draw_segmentMess(positions.chin);// cool code mess for the cross hatching
+
 
 
 // this.draw_segmentbottomLip(positions.bottom_lip);
@@ -132,6 +142,7 @@ stroke(255);
 noFill();
 
 
+stroke(landmark)
 //=======================DEBUG==============================
 this.leftEye = positions.left_eye;//------------------
   beginShape();
@@ -147,17 +158,10 @@ this.rightEye = positions.right_eye;//------------------
 }
 endShape(CLOSE);
 
-// this.topLip = positions.top_lip;//------------------------
-//   beginShape();
-//   for(let i = 0; i<this.topLip.length; i++){
-//   curveVertex(this.topLip[i][0],this.topLip[i][1]);
-// }
-// endShape(CLOSE);
 //=======================================================
 
-stroke(100,200,100)
 
-//++++++++++++++++++++++++++++++++++++++++++++CHEEKS+++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++CHEEKS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //right chin_____________________________________________
 // this.draw_segmentRight = function(segment) {
 //   for(let i=9; i<segment.length; i++) {
@@ -190,56 +194,39 @@ stroke(100,200,100)
 // this.draw_segmentRight(positions.chin);
 // this.draw_segmentLeft(positions.chin);
 
-this.leftCheek = positions.chin;//-----left---------
-  beginShape();
-  // curveVertex(this.leftCheek[0][0],this.leftCheek[0][1]);
+//-----left---------
+//   beginShape();
+//   curveVertex(this.leftCheek[0][0],this.leftCheek[0][1]);
+//   for(let i =0; i<9 ; i++){
+//   curveVertex(this.leftCheek[i][0],this.leftCheek[i][1]);
+//   }
+// endShape();
 
-  for(let i =0; i<9 ; i++){
-  curveVertex(this.leftCheek[i][0],this.leftCheek[i][1]);
-}
 
-endShape();
+// beginShape();
+// for(let i = 8; i<16; i++){
+//   curveVertex(this.rightCheek[i][0],this.rightCheek[i][1]);
+// }
+// curveVertex(this.rightCheek[16][0],this.rightCheek[16][1]);
+// curveVertex(this.rightCheek[16][0],this.rightCheek[16][1]);
 
-this.rightCheek = positions.chin;//right
-beginShape();
-for(let i = 8; i<16; i++){
-curveVertex(this.rightCheek[i][0],this.rightCheek[i][1]);
-}
-endShape();
+// endShape();
 
-//++++++++++++++++++++++++++++++++LIPS+++++++++++++++++++++++++++++++++++++++++
-this.bottomLip = positions.bottom_lip;//----------------------Bottom Lip----------DEBUG
-beginShape();
-for(let i =0;i<this.bottomLip.length; i++){
-  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1])
-}endShape(CLOSE);
+//CROSS HATCH--------------------------------
+// this.draw_segmentMess(positions.chin);// cool code mess for the cross hatching
+// this.draw_segmentMess2(positions.chin);// cool code mess for the cross hatching
 
-this.topLip = positions.top_lip;//----------------------Bottom Lip----------DEBUG
-beginShape();
-for(let i =0;i<this.topLip.length; i++){
-  curveVertex(this.topLip[i][0],this.topLip[i][1])
-}endShape(CLOSE);
 
-strokeWeight(0.04);
-beginShape();//bottom part------------------
-for(let i = 0; i<7; i++){
-  if(length>1||length<6){
-  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
-} }
-endShape();
-beginShape();//top part--------------------
-for(let i = 7; i<12; i++){
-  if(length>8||length<10){
-  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
-} }
-endShape();
-
-//++++++++++++++++++++++++++++++RIGHT CHEEK+++++++++++++++++++++++++++++++++
+//-------------------------------RIGHT CHEEK-------------------------------
+stroke(shadow);
 this.cheekboneR = segment_average([positions.bottom_lip[0],positions.chin[14]]);
 this.lowCheekboneR = segment_average([positions.bottom_lip[0],positions.chin[9]])
 this.topCheekboneR = positions.chin[16];
 this.chinCheekR = positions.chin[9]
 
+this.rightCheek = positions.chin;//right
+
+// fill(255,125);
 beginShape();
 curveVertex(this.topCheekboneR[0],this.topCheekboneR[1]);
 curveVertex(this.topCheekboneR[0],this.topCheekboneR[1]);
@@ -247,22 +234,108 @@ curveVertex(this.cheekboneR[0],this.cheekboneR[1]);
 curveVertex(this.lowCheekboneR[0],this.lowCheekboneR[1]);
 curveVertex(this.chinCheekR[0],this.chinCheekR[1]);
 curveVertex(this.chinCheekR[0],this.chinCheekR[1]);
-endShape();
+for(let i = 8; i<16; i++){
+  curveVertex(this.rightCheek[i][0],this.rightCheek[i][1]);
+}
+endShape(CLOSE);
 
-//++++++++++++++++++++++LEFT CHEEK++++++++++++++++++++++++++++++++++++++++
+//--------------------------------------LEFT CHEEK------------------------
 this.cheekboneL = segment_average([positions.bottom_lip[7],positions.chin[2]]);
 this.lowCheekboneL = segment_average([positions.bottom_lip[7],positions.chin[7]]);
 this.topCheekboneL = positions.chin[0];
 this.chinCheekL = positions.chin[7];
 
+this.leftCheek = positions.chin;
 beginShape();
-curveVertex(this.topCheekboneL[0],this.topCheekboneL[1]);
-curveVertex(this.topCheekboneL[0],this.topCheekboneL[1]);
-curveVertex(this.cheekboneL[0],this.cheekboneL[1]);
+curveVertex(this.chinCheekL[0],this.chinCheekL[1]);
+curveVertex(this.chinCheekL[0],this.chinCheekL[1]);
 curveVertex(this.lowCheekboneL[0],this.lowCheekboneL[1]);
+curveVertex(this.cheekboneL[0],this.cheekboneL[1]);
+curveVertex(this.topCheekboneL[0],this.topCheekboneL[1]);
+for(let i =0; i<9 ; i++){
+curveVertex(this.leftCheek[i][0],this.leftCheek[i][1]);
+}
 curveVertex(this.chinCheekL[0],this.chinCheekL[1]);
-curveVertex(this.chinCheekL[0],this.chinCheekL[1]);
+endShape(CLOSE);
+
+//-------------------------HIGHLIGHT------------------
+stroke(highlightS);
+this.eyePointL = segment_average([positions.left_eye[3],positions.nose_bridge[2]]);
+this.eyeOutL = segment_average([positions.chin[1],positions.nose_bridge[1]]);
+this.nosePointL = segment_average([positions.top_lip[0],positions.nose_tip[2],positions.chin[2]])
+// this.nosePoint2l = segment_average([this.]);
+
+beginShape();//left 
+curveVertex(this.eyePointL[0],this.eyePointL[1]);
+curveVertex(this.eyePointL[0],this.eyePointL[1]);
+curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
+curveVertex(this.nosePointL[0],this.nosePointL[1]);
+endShape(CLOSE);
+
+this.eyePointR = segment_average([positions.right_eye[0],positions.nose_bridge[2]]);
+this.eyeOutR = segment_average([positions.chin[15],positions.nose_bridge[1]]);
+this.nosePointR = segment_average([positions.top_lip[7],positions.nose_tip[0],positions.chin[13]])
+// this.nosePoint2l = segment_average([this.]);
+
+beginShape();//left 
+curveVertex(this.eyePointR[0],this.eyePointR[1]);
+curveVertex(this.eyePointR[0],this.eyePointR[1]);
+curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
+curveVertex(this.nosePointR[0],this.nosePointR[1]);
+endShape(CLOSE);
+
+noFill();
+stroke(landmark);
+//++++++++++++++++++++++++++++++++LIPS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+this.bottomLip = positions.bottom_lip;//----------------------Bottom Lip----
+beginShape();
+for(let i =0;i<this.bottomLip.length; i++){
+  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1])
+}endShape(CLOSE);
+
+this.topLip = positions.top_lip;//----------------------Top Lip------
+beginShape();
+for(let i =0;i<this.topLip.length; i++){
+  curveVertex(this.topLip[i][0],this.topLip[i][1])
+}endShape(CLOSE);
+
+//shadow
+stroke(shadow);
+strokeWeight(0.02);
+beginShape();//bottom part------------------
+curveVertex(this.bottomLip[1][0],this.bottomLip[1][1]);
+for(let i = 2; i<5; i++){
+  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
+ }
+ curveVertex(this.bottomLip[5][0],this.bottomLip[5][1]);
 endShape();
+
+beginShape();
+curveVertex(this.topLip[9][0],this.topLip[9][1]);
+for(let i =8;i<11;i++){
+  curveVertex(this.topLip[i][0],this.topLip[i][1])
+}
+curveVertex(this.topLip[10][0],this.topLip[10][1]);
+endShape();
+
+
+//highlight
+stroke(highlightS);
+  beginShape();//Bottom
+  for(let i = 7; i<12; i++){
+    curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
+   }
+endShape();
+
+beginShape();//Top
+  curveVertex(this.topLip[2][0],this.topLip[2][1]);
+for(let i =1;i<6; i++){
+  curveVertex(this.topLip[i][0],this.topLip[i][1])
+}
+curveVertex(this.topLip[5][0],this.topLip[5][1]);
+endShape();
+
+stroke(landmark);
 
 //+++++++++++++++++++++++++NOSE+++++++++++++++++++++++++++++++++++++
 //nose_tip, (31-35)
@@ -274,7 +347,6 @@ this.middleNoseT = positions.nose_tip[2];
 
 // this.leftBrowRidge = segment_average([positions.nose_bridge[1],positions.left_eye[3]]);
 // this.rightBrowRidge = segment_average([positions.nose_bridge[1],positions.right_eye[0]]);
-
 this.leftBrowRidge = segment_average([positions.nose_bridge[1],positions.nose_tip[0]]);
 this.rightBrowRidge = segment_average([positions.nose_bridge[1],positions.nose_tip[4]]);
 
@@ -288,6 +360,30 @@ curveVertex(this.rightBrowRidge[0],this.rightBrowRidge[1]);
 // curveVertex(this.rightBrowRidge[0],this.rightBrowRidge[1]);
 endShape(CLOSE);
 
+//-------------SHADOW---------------------
+
+
+//---------------HIGHLIGHT-------------------
+// stroke(highlight);
+noStroke();
+this.noseHighlight = positions.nose_bridge;//HIGHLIGHT
+this.noseHLR = segment_average([positions.nose_bridge[3],positions.nose_tip[1]]);
+this.noseHLL = segment_average([positions.nose_bridge[3],positions.nose_tip[3]]);
+
+fill(highlight,50);
+beginShape();
+curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
+curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
+// curveVertex(this.noseHighlight[1][0],this.noseHighlight[1][1])
+// curveVertex(this.noseHighlight[2][0],this.noseHighlight[2][1])
+curveVertex(this.noseHLR[0],this.noseHLR[1])
+curveVertex(this.noseHLL[0],this.noseHLL[1])
+endShape(CLOSE);
+
+
+noFill();
+strokeWeight(0.02);
+stroke(landmark);
 //++++++++++++++++++++++++++++++EYEBROWS++++++++++++++++++++++++++++++
 //left_eyebrow 17-21  ,,  right_eyebrow 22-26
 
@@ -323,6 +419,52 @@ beginShape();
   curveVertex(this.rightEBend[0],this.rightEBend[1]);
   curveVertex(this.rightEBend[0],this.rightEBend[1]);
 endShape();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
