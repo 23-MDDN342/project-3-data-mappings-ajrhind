@@ -28,18 +28,51 @@ function segment_average(segment) {
   return [sum_x / s_len , sum_y / s_len ];
 }
 
+// function stipple() {
+//   // createCanvas(800, 800);
+  
+//   // Design a pattern, this one just puts random dots 
+//   p = createGraphics(width, height);
+//   p.background(150,0,255);
+//   p.fill(255,0,255);
+//   p.noStroke();
+//   for (let i = 0.2; i < 500; i++){
+//     let x = i;
+//     let y = i;
+//     p.ellipse(x, y, 0.05);
+//   }
+//     buf = createGraphics(width, height);
+// }
+// // image(buf,0,0);
+
+// function createPattern(p, buf=this){
+//   return buf.drawingContext.createPattern(p.canvas, 'repeat');
+// }
+
+// function setFill(arg, buf=this) {
+//   buf.fill(0);
+//   buf._renderer._setFill(arg);
+// }
+
 // This where you define your own face object
-function Face(cheek,nose,eyes,temples,mouth,sideRight) {
+function Face(eyes,hair,skin,brows,teeth,dimples,crosshatchR, crosshatchL) {
 
 
-  this.cheek = 0;
-  this.nose = 0;
-  this.eyes = 0;
-  this.temples = 0;
-  this.mouth = 0;
-  this.sideRight = 0;
-  // this.evilness =0;
+  // this.cheek = 0;
+  // this.nose = 0;
+  // this.eyes = 0;
+  // this.temples = 0;
+  // this.mouth = 0;
+  // this.sideRight = 0;
 
+  this.eyes =0;
+  this.hair=0;
+  this.skin =0;
+  this.brows =0;
+  this.teeth =0;
+  this.dimples =0;
+  this.crosshatchR =0
+  this.crosshatchL =0
   // these are state variables for a face
   // (your variables should be different!)
   // this.detailColour = [204, 100, 170 ];
@@ -64,7 +97,7 @@ function Face(cheek,nose,eyes,temples,mouth,sideRight) {
 
   
   const landmark = color(100,200,100);
-  let highlight = color(250, 182, 182,125);
+  const highlight = color(250, 182, 182,125);
   const highlightS = color(200,100,100);
   const shadow = color(100,100,200);
     this.colorOptions = [landmark,highlight,shadow]
@@ -72,6 +105,11 @@ function Face(cheek,nose,eyes,temples,mouth,sideRight) {
 
 
 strokeWeight(0.01)
+
+//=======================================================================================================================================
+
+
+
 
 
 this.draw_segmentMess = function(segment) {//this makes a cool effect//it looks like cross hatching
@@ -216,6 +254,15 @@ endShape(CLOSE);
 // this.draw_segmentMess(positions.chin);// cool code mess for the cross hatching
 // this.draw_segmentMess2(positions.chin);// cool code mess for the cross hatching
 
+this.stipple = function(){
+
+  for(i = 0;i<50;i++){
+      x=i/2;
+      y=0;
+      ellipse(x,y,0.05);
+  }
+}
+
 
 //-------------------------------RIGHT CHEEK-------------------------------
 stroke(shadow);
@@ -223,10 +270,22 @@ this.cheekboneR = segment_average([positions.bottom_lip[0],positions.chin[14]]);
 this.lowCheekboneR = segment_average([positions.bottom_lip[0],positions.chin[9]])
 this.topCheekboneR = positions.chin[16];
 this.chinCheekR = positions.chin[9]
-
 this.rightCheek = positions.chin;//right
+this.chinChinR = positions.chin[10];
 
-// fill(255,125);
+
+this.differenceRight = this.chinChinR[0]-this.lowCheekboneR[0];
+console.log(this.differenceRight);
+this.RightTrans = map(this.differenceRight,0,0.55,255,100);
+
+
+fill(100,100,200,this.RightTrans);
+
+
+
+
+// ellipse(this.lowCheekboneR[0],this.lowCheekboneR[1],0.1);
+
 beginShape();
 curveVertex(this.topCheekboneR[0],this.topCheekboneR[1]);
 curveVertex(this.topCheekboneR[0],this.topCheekboneR[1]);
@@ -244,6 +303,18 @@ this.cheekboneL = segment_average([positions.bottom_lip[7],positions.chin[2]]);
 this.lowCheekboneL = segment_average([positions.bottom_lip[7],positions.chin[7]]);
 this.topCheekboneL = positions.chin[0];
 this.chinCheekL = positions.chin[7];
+this.chinChinL = positions.chin[6];
+
+this.differenceLeft = this.lowCheekboneL[0]-this.chinChinL[0];
+this.LeftTrans = map(this.differenceLeft,0,0.65,255,100);
+
+
+fill(100,100,200,this.LeftTrans);
+
+// console.log(this.lowCheekboneL);
+// console.log(this.chinChinL);
+// ellipse(this.lowCheekboneL[0],this.lowCheekboneL[1],0.1);
+
 
 this.leftCheek = positions.chin;
 beginShape();
@@ -258,7 +329,17 @@ curveVertex(this.leftCheek[i][0],this.leftCheek[i][1]);
 curveVertex(this.chinCheekL[0],this.chinCheekL[1]);
 endShape(CLOSE);
 
+
+// get([positions.chin[6]]-this.lowCheekboneL);
+// this.differenceLeft = this.lowCheekboneL[0]-this.chinChinL[0];
+// console.log(this.differenceLeft);
+// if(this.differenceLeft<);
+
+
+
 //-------------------------HIGHLIGHT------------------
+noFill();
+
 stroke(highlightS);
 this.eyePointL = segment_average([positions.left_eye[3],positions.nose_bridge[2]]);
 this.eyeOutL = segment_average([positions.chin[1],positions.nose_bridge[1]]);
@@ -284,7 +365,8 @@ curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
 curveVertex(this.nosePointR[0],this.nosePointR[1]);
 endShape(CLOSE);
 
-noFill();
+
+
 stroke(landmark);
 //++++++++++++++++++++++++++++++++LIPS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 this.bottomLip = positions.bottom_lip;//----------------------Bottom Lip----
@@ -437,6 +519,133 @@ endShape();
 
 
 
+  }
+
+  // example of a function *inside* the face object.
+  // this draws a segment, and do_loop will connect the ends if true
+  // this.draw_segment = function(segment, do_loop) {
+  //   for(let i=0; i<segment.length; i++) {
+  //       let px = segment[i][0];
+  //       let py = segment[i][1];
+  //       ellipse(px, py, 0.1);
+
+
+
+  //       if(i < segment.length - 1) {
+  //         let nx = segment[i+1][0];
+  //         let ny = segment[i+1][1];
+  //         line(px, py, nx, ny);
+  //       }
+  //       else if(do_loop) {
+  //         let nx = segment[0][0];
+  //         let ny = segment[0][1];
+  //         line(px, py, nx, ny);
+  //       }
+  //   }
+  // };
+
+  /* set internal properties based on list numbers 0-100 */
+  this.setProperties = function(settings) {
+    // this.num_eyes = int(map(settings[0], 0, 100, 1, 2));
+    // this.eye_shift = map(settings[1], 0, 100, -2, 2);
+    // this.mouth_size = map(settings[2], 0, 100, 0.5, 8);
+    
+    this.eyes = map(settings[0],0,100,1.8,3);
+    this.hair = map(settings[1],0,100,3.5,4.2);
+    this.skin = map(settings[2],0,100,5.5,6);
+    this.brows =map(settings[3],0,100,4,5,);
+    this.teeth =map(settings[4],0,100,7.2,8);
+    this.dimples = map(settings[5],0,100,-1,1);
+    this.crosshatch = map(settings[6],0,100,150,255);
+
+    
+  }
+
+  /* get internal properties as list of numbers 0-100 */
+  this.getProperties = function() {
+    let settings = new Array(3);
+    // settings[0] = map(this.num_eyes, 1, 2, 0, 100);
+    // settings[1] = map(this.eye_shift, -2, 2, 0, 100);
+    // settings[2] = map(this.mouth_size, 0.5, 8, 0, 100);
+
+
+    settings[0]=map(this.eyes,1.8,3,0,100);
+    settings[1] = map(this.hair,3.5,4.2,0,100);
+    settings[2]=map(this.skin,5.5,6,0,100);
+    settings[3]=map(this.brows,4,5,0,100);
+    settings[4]=map(this.teeth,7.2,8,0,100);
+    settings[5]=map(this.dimples,-1,1,0,100);
+    settings[6]=map(this.crosshatch,150,255,0,100);
+
+    return settings;
+  }
+}
+
+
+
+    // head
+    // ellipseMode(CENTER);
+    // stroke(stroke_color);
+    // fill(this.mainColour);
+    // ellipse(segment_average(positions.chin)[0], 0, 3, 4);
+    // noStroke();
+
+    // // mouth
+    // fill(this.detailColour);
+    // ellipse(segment_average(positions.bottom_lip)[0], segment_average(positions.bottom_lip)[1], 1.36, 0.25 * this.mouth_size);
+
+    // // eyebrows
+    // fill( this.eyebrowColour);
+    // stroke( this.eyebrowColour);
+    // strokeWeight(0.08);
+    // this.draw_segment(positions.left_eyebrow);
+    // this.draw_segment(positions.right_eyebrow);
+
+  //   // draw the chin segment using points
+    // fill(this.chinColour);
+    // stroke(this.chinColour);
+    // this.draw_segment(positions.chin);
+
+  //   fill(100, 0, 100);
+  //   stroke(100, 0, 100);
+  //   this.draw_segment(positions.nose_bridge);
+  //   this.draw_segment(positions.nose_tip);
+
+  //   strokeWeight(0.03);
+
+  //   fill(this.lipColour);
+  //   stroke(this.lipColour);
+  //   this.draw_segment(positions.top_lip);
+  //   this.draw_segment(positions.bottom_lip);
+
+  //   let left_eye_pos = segment_average(positions.left_eye);
+  //   let right_eye_pos = segment_average(positions.right_eye);
+
+  //   // eyes
+  //   noStroke();
+  //   let curEyeShift = 0.04 * this.eye_shift;
+  //   if(this.num_eyes == 2) {
+  //     fill(this.detailColour);
+  //     ellipse(left_eye_pos[0], left_eye_pos[1], 0.5, 0.33);
+  //     ellipse(right_eye_pos[0], right_eye_pos[1], 0.5, 0.33);
+
+  //     // fill(this.mainColour);
+  //     // ellipse(left_eye_pos[0] + curEyeShift, left_eye_pos[1], 0.18);
+  //     // ellipse(right_eye_pos[0] + curEyeShift, right_eye_pos[1], 0.18);
+  //   }
+  //   else {
+  //     let eyePosX = (left_eye_pos[0] + right_eye_pos[0]) / 2;
+  //     let eyePosY = (left_eye_pos[1] + right_eye_pos[1]) / 2;
+
+  //     fill(this.detailColour);
+  //     ellipse(eyePosX, eyePosY, 0.45, 0.27);
+
+  //     fill(this.mainColour);
+  //     ellipse(eyePosX - 0.1 + curEyeShift, eyePosY, 0.18);
+  //   }
+  //  // fill(0)
+  //  //ellipse(0,0, 0.5,0.5) center point
+  //  //rect(-2,-2,4.5,4) sizing debug 
 
 
 
@@ -451,36 +660,7 @@ endShape();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 // this.bottomlipLeft = positions.bottom_lip[5];
 // this.bottomlipRight = positions.bottom_lip[1];
 
@@ -691,132 +871,3 @@ endShape();
 // // ellipse(this.rightEyex,this.rightEyey,1);
 
 // pop();
-
-
-  }
-
-  // example of a function *inside* the face object.
-  // this draws a segment, and do_loop will connect the ends if true
-  // this.draw_segment = function(segment, do_loop) {
-  //   for(let i=0; i<segment.length; i++) {
-  //       let px = segment[i][0];
-  //       let py = segment[i][1];
-  //       ellipse(px, py, 0.1);
-
-
-
-  //       if(i < segment.length - 1) {
-  //         let nx = segment[i+1][0];
-  //         let ny = segment[i+1][1];
-  //         line(px, py, nx, ny);
-  //       }
-  //       else if(do_loop) {
-  //         let nx = segment[0][0];
-  //         let ny = segment[0][1];
-  //         line(px, py, nx, ny);
-  //       }
-  //   }
-  // };
-
-  /* set internal properties based on list numbers 0-100 */
-  this.setProperties = function(settings) {
-    // this.num_eyes = int(map(settings[0], 0, 100, 1, 2));
-    // this.eye_shift = map(settings[1], 0, 100, -2, 2);
-    // this.mouth_size = map(settings[2], 0, 100, 0.5, 8);
-
-    this.cheek = map(settings[0],0,100,3.5,4.2);
-    this.nose = map(settings[1],0,100,5.5,6);
-    this.eyes = map(settings[2],0,100,1.8,3);
-    this.temples =map(settings[3],0,100,4,5,);
-    this.mouth =map(settings[4],0,100,7.2,8);
-    this.sideRight = map(settings[5],0,100,-1,1);
-    // this.redEyes = map(settings[9],0,100,0,300);
-
-    
-  }
-
-  /* get internal properties as list of numbers 0-100 */
-  this.getProperties = function() {
-    let settings = new Array(3);
-    // settings[0] = map(this.num_eyes, 1, 2, 0, 100);
-    // settings[1] = map(this.eye_shift, -2, 2, 0, 100);
-    // settings[2] = map(this.mouth_size, 0.5, 8, 0, 100);
-
-
-    settings[0] = map(this.cheek,3.5,4.2,0,100);
-    settings[1]=map(this.nose,5.5,6,0,100);
-    settings[2]=map(this.eyes,1.8,3,0,100);
-    settings[3]=map(this.temples,4,5,0,100);
-    settings[4]=map(this.mouth,7.2,8,0,100);
-    settings[5]=map(this.sideRight,-1,1,0,100);
-    // settings[9]=map(this.redEyes,0,300,0,100);
-
-    return settings;
-  }
-}
-
-
-
-    // head
-    // ellipseMode(CENTER);
-    // stroke(stroke_color);
-    // fill(this.mainColour);
-    // ellipse(segment_average(positions.chin)[0], 0, 3, 4);
-    // noStroke();
-
-    // // mouth
-    // fill(this.detailColour);
-    // ellipse(segment_average(positions.bottom_lip)[0], segment_average(positions.bottom_lip)[1], 1.36, 0.25 * this.mouth_size);
-
-    // // eyebrows
-    // fill( this.eyebrowColour);
-    // stroke( this.eyebrowColour);
-    // strokeWeight(0.08);
-    // this.draw_segment(positions.left_eyebrow);
-    // this.draw_segment(positions.right_eyebrow);
-
-  //   // draw the chin segment using points
-    // fill(this.chinColour);
-    // stroke(this.chinColour);
-    // this.draw_segment(positions.chin);
-
-  //   fill(100, 0, 100);
-  //   stroke(100, 0, 100);
-  //   this.draw_segment(positions.nose_bridge);
-  //   this.draw_segment(positions.nose_tip);
-
-  //   strokeWeight(0.03);
-
-  //   fill(this.lipColour);
-  //   stroke(this.lipColour);
-  //   this.draw_segment(positions.top_lip);
-  //   this.draw_segment(positions.bottom_lip);
-
-  //   let left_eye_pos = segment_average(positions.left_eye);
-  //   let right_eye_pos = segment_average(positions.right_eye);
-
-  //   // eyes
-  //   noStroke();
-  //   let curEyeShift = 0.04 * this.eye_shift;
-  //   if(this.num_eyes == 2) {
-  //     fill(this.detailColour);
-  //     ellipse(left_eye_pos[0], left_eye_pos[1], 0.5, 0.33);
-  //     ellipse(right_eye_pos[0], right_eye_pos[1], 0.5, 0.33);
-
-  //     // fill(this.mainColour);
-  //     // ellipse(left_eye_pos[0] + curEyeShift, left_eye_pos[1], 0.18);
-  //     // ellipse(right_eye_pos[0] + curEyeShift, right_eye_pos[1], 0.18);
-  //   }
-  //   else {
-  //     let eyePosX = (left_eye_pos[0] + right_eye_pos[0]) / 2;
-  //     let eyePosY = (left_eye_pos[1] + right_eye_pos[1]) / 2;
-
-  //     fill(this.detailColour);
-  //     ellipse(eyePosX, eyePosY, 0.45, 0.27);
-
-  //     fill(this.mainColour);
-  //     ellipse(eyePosX - 0.1 + curEyeShift, eyePosY, 0.18);
-  //   }
-  //  // fill(0)
-  //  //ellipse(0,0, 0.5,0.5) center point
-  //  //rect(-2,-2,4.5,4) sizing debug 
