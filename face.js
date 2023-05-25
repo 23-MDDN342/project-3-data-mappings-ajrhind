@@ -13,7 +13,7 @@ var NUM_SLIDERS = 8;
 // here's some examples for colors used
 
 
-const stroke_color = [95, 52, 8];
+// const stroke_color = [95, 52, 8];
 
 // example of a global function
 // given a segment, this returns the average point [x, y]
@@ -28,31 +28,7 @@ function segment_average(segment) {
   return [sum_x / s_len , sum_y / s_len ];
 }
 
-// function stipple() {
-//   // createCanvas(800, 800);
-  
-//   // Design a pattern, this one just puts random dots 
-//   p = createGraphics(width, height);
-//   p.background(150,0,255);
-//   p.fill(255,0,255);
-//   p.noStroke();
-//   for (let i = 0.2; i < 500; i++){
-//     let x = i;
-//     let y = i;
-//     p.ellipse(x, y, 0.05);
-//   }
-//     buf = createGraphics(width, height);
-// }
-// // image(buf,0,0);
 
-// function createPattern(p, buf=this){
-//   return buf.drawingContext.createPattern(p.canvas, 'repeat');
-// }
-
-// function setFill(arg, buf=this) {
-//   buf.fill(0);
-//   buf._renderer._setFill(arg);
-// }
 
 // This where you define your own face object
 function Face(eyes,hair,skin,brows,teeth,dimples,crosshatchR, crosshatchL) {
@@ -71,8 +47,8 @@ function Face(eyes,hair,skin,brows,teeth,dimples,crosshatchR, crosshatchL) {
   this.brows =0;
   this.teeth =0;
   this.dimples =0;
-  this.crosshatchR =0
-  this.crosshatchL =0
+  this.crosshatch =0;
+
   // these are state variables for a face
   // (your variables should be different!)
   // this.detailColour = [204, 100, 170 ];
@@ -95,12 +71,21 @@ function Face(eyes,hair,skin,brows,teeth,dimples,crosshatchR, crosshatchL) {
   this.draw = function (positions) {
     // console.log()
 
+    // colorMode(HSL);
   
-  const landmark = color(100,200,100);
-  const highlight = color(250, 182, 182,125);
-  const highlightS = color(200,100,100);
-  const shadow = color(100,100,200);
-    this.colorOptions = [landmark,highlight,shadow]
+  const landmark = color(255);
+  // const highlight = color(80,100,200);//250, 182, 182
+  // const highlightS  =color(80,100,201);//250, 252, 121
+  // const shadow = color(100,100,200);//rgb
+
+  const highlight = color(107, 255, 134);
+  const highlightS = color(107, 255, 134);
+  const shadow = color(51, 166, 72);
+
+  let uhhGre = lerp(highlightS,shadow, 0.5)
+
+
+  this.colorOptions = [landmark,highlight,shadow]
 
 
 
@@ -112,30 +97,30 @@ strokeWeight(0.01)
 
 
 
-this.draw_segmentMess = function(segment) {//this makes a cool effect//it looks like cross hatching
-  for(let i=9; i<segment.length; i++) {
-      let px = segment[i][0];
-      let py = segment[i][1];
+// this.draw_segmentMess = function(segment) {//this makes a cool effect//it looks like cross hatching
+//   for(let i=9; i<segment.length; i++) {
+//       let px = segment[i][0];
+//       let py = segment[i][1];
 
-      if(i < segment.length - 1) {
-        let nx = segment[16][0];
-        let ny = segment[0][1];
-        line(px, py, nx, ny);
-      }
-  }
-}
-this.draw_segmentMess2 = function(segment) {//this makes a cool effect//it looks like cross hatching
-  for(let i=9; i<segment.length; i++) {
-      let px = segment[i][0];
-      let py = segment[i][1];
+//       if(i < segment.length - 1) {
+//         let nx = segment[16][0];
+//         let ny = segment[0][1];
+//         line(px, py, nx, ny);
+//       }
+//   }
+// }
+// this.draw_segmentMess2 = function(segment) {//this makes a cool effect//it looks like cross hatching
+//   for(let i=9; i<segment.length; i++) {
+//       let px = segment[i][0];
+//       let py = segment[i][1];
 
-      if(i < segment.length - 1) {
-        let nx = segment[9][0];
-        let ny = segment[5][1];
-        line(px, py, nx, ny);
-      }
-  }
-}
+//       if(i < segment.length - 1) {
+//         let nx = segment[9][0];
+//         let ny = segment[5][1];
+//         line(px, py, nx, ny);
+//       }
+//   }
+// }
 
 
 this.draw_segment = function(segment, do_loop) {
@@ -273,18 +258,11 @@ this.chinCheekR = positions.chin[9]
 this.rightCheek = positions.chin;//right
 this.chinChinR = positions.chin[10];
 
-
 this.differenceRight = this.chinChinR[0]-this.lowCheekboneR[0];
-console.log(this.differenceRight);
+// console.log(this.differenceRight);
 this.RightTrans = map(this.differenceRight,0,0.55,255,100);
 
-
-fill(100,100,200,this.RightTrans);
-
-
-
-
-// ellipse(this.lowCheekboneR[0],this.lowCheekboneR[1],0.1);
+fill(100,100,this.crosshatch,this.RightTrans);
 
 beginShape();
 curveVertex(this.topCheekboneR[0],this.topCheekboneR[1]);
@@ -298,6 +276,7 @@ for(let i = 8; i<16; i++){
 }
 endShape(CLOSE);
 
+noFill();
 //--------------------------------------LEFT CHEEK------------------------
 this.cheekboneL = segment_average([positions.bottom_lip[7],positions.chin[2]]);
 this.lowCheekboneL = segment_average([positions.bottom_lip[7],positions.chin[7]]);
@@ -309,12 +288,7 @@ this.differenceLeft = this.lowCheekboneL[0]-this.chinChinL[0];
 this.LeftTrans = map(this.differenceLeft,0,0.65,255,100);
 
 
-fill(100,100,200,this.LeftTrans);
-
-// console.log(this.lowCheekboneL);
-// console.log(this.chinChinL);
-// ellipse(this.lowCheekboneL[0],this.lowCheekboneL[1],0.1);
-
+// fill(100,100,this.crosshatch,this.LeftTrans);
 
 this.leftCheek = positions.chin;
 beginShape();
@@ -330,23 +304,20 @@ curveVertex(this.chinCheekL[0],this.chinCheekL[1]);
 endShape(CLOSE);
 
 
-// get([positions.chin[6]]-this.lowCheekboneL);
-// this.differenceLeft = this.lowCheekboneL[0]-this.chinChinL[0];
-// console.log(this.differenceLeft);
-// if(this.differenceLeft<);
-
-
-
 //-------------------------HIGHLIGHT------------------
-noFill();
 
-stroke(highlightS);
+
+// fill(this.crosshatch,100,100,this.LeftTrans);
+
+// stroke(highlightS);
 this.eyePointL = segment_average([positions.left_eye[3],positions.nose_bridge[2]]);
-this.eyeOutL = segment_average([positions.chin[1],positions.nose_bridge[1]]);
-this.nosePointL = segment_average([positions.top_lip[0],positions.nose_tip[2],positions.chin[2]])
+this.eyeOutL = segment_average([positions.chin[1],positions.left_eye[5]]);
+this.nosePointL = segment_average([positions.nose_tip[0],positions.nose_tip[1],positions.chin[2]])
 // this.nosePoint2l = segment_average([this.]);
 
 beginShape();//left 
+// curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
+// curveVertex(this.nosePointL[0],this.nosePointL[1]);
 curveVertex(this.eyePointL[0],this.eyePointL[1]);
 curveVertex(this.eyePointL[0],this.eyePointL[1]);
 curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
@@ -354,11 +325,12 @@ curveVertex(this.nosePointL[0],this.nosePointL[1]);
 endShape(CLOSE);
 
 this.eyePointR = segment_average([positions.right_eye[0],positions.nose_bridge[2]]);
-this.eyeOutR = segment_average([positions.chin[15],positions.nose_bridge[1]]);
-this.nosePointR = segment_average([positions.top_lip[7],positions.nose_tip[0],positions.chin[13]])
-// this.nosePoint2l = segment_average([this.]);
+this.eyeOutR = segment_average([positions.chin[15],positions.right_eye[4]]);
+this.nosePointR = segment_average([positions.nose_tip[3],positions.nose_tip[4],positions.chin[13]])
 
-beginShape();//left 
+// fill(this.crosshatch,100,100,this.RightTrans);
+
+beginShape();//right
 curveVertex(this.eyePointR[0],this.eyePointR[1]);
 curveVertex(this.eyePointR[0],this.eyePointR[1]);
 curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
@@ -452,7 +424,7 @@ this.noseHighlight = positions.nose_bridge;//HIGHLIGHT
 this.noseHLR = segment_average([positions.nose_bridge[3],positions.nose_tip[1]]);
 this.noseHLL = segment_average([positions.nose_bridge[3],positions.nose_tip[3]]);
 
-fill(highlight,50);
+// fill(highlight,50);
 beginShape();
 curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
 curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
@@ -468,6 +440,8 @@ strokeWeight(0.02);
 stroke(landmark);
 //++++++++++++++++++++++++++++++EYEBROWS++++++++++++++++++++++++++++++
 //left_eyebrow 17-21  ,,  right_eyebrow 22-26
+
+// strokeWeight(0.1);
 
 this.leftEB = positions.left_eyebrow[0];//---------------left
 this.leftEBOne = positions.left_eyebrow[1];
@@ -501,21 +475,6 @@ beginShape();
   curveVertex(this.rightEBend[0],this.rightEBend[1]);
   curveVertex(this.rightEBend[0],this.rightEBend[1]);
 endShape();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
