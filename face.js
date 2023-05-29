@@ -31,7 +31,7 @@ function segment_average(segment) {
 
 
 // This where you define your own face object
-function Face(eyes,hair,skin,brows,teeth,dimples,crosshatchR, crosshatchL) {
+function Face(eyes,hair,skin,brows,highL,dimples,crosshatch, crosshatchL) {
 
 
   // this.cheek = 0;
@@ -45,7 +45,7 @@ function Face(eyes,hair,skin,brows,teeth,dimples,crosshatchR, crosshatchL) {
   this.hair=0;
   this.skin =0;
   this.brows =0;
-  this.teeth =0;
+  this.highL =0;
   this.dimples =0;
   this.crosshatch =0;
 
@@ -79,10 +79,10 @@ function Face(eyes,hair,skin,brows,teeth,dimples,crosshatchR, crosshatchL) {
   // const shadow = color(100,100,200);//rgb
 
   const highlight = color(107, 255, 134);
-  const highlightS = color(107, 255, 134);
-  const shadow = color(51, 166, 72);
+  let highlightS = color(107, 255, 134);
+  let shadow = color(51, 166, 72);
 
-  let uhhGre = lerp(highlightS,shadow, 0.5)
+  // this.uhhGre = lerp(highlightS, shadow, 0.2);
 
 
   this.colorOptions = [landmark,highlight,shadow]
@@ -260,11 +260,11 @@ this.chinChinR = positions.chin[10];
 
 this.differenceRight = this.chinChinR[0]-this.lowCheekboneR[0];
 // console.log(this.differenceRight);
-this.RightTrans = map(this.differenceRight,0,0.55,255,100);
+this.RightTrans = map(this.differenceRight,0,0.55,255,10);
 
-fill(100,100,this.crosshatch,this.RightTrans);
+fill(100,this.crosshatch,100,this.RightTrans);
 
-beginShape();
+beginShape(); 
 curveVertex(this.topCheekboneR[0],this.topCheekboneR[1]);
 curveVertex(this.topCheekboneR[0],this.topCheekboneR[1]);
 curveVertex(this.cheekboneR[0],this.cheekboneR[1]);
@@ -285,10 +285,12 @@ this.chinCheekL = positions.chin[7];
 this.chinChinL = positions.chin[6];
 
 this.differenceLeft = this.lowCheekboneL[0]-this.chinChinL[0];
-this.LeftTrans = map(this.differenceLeft,0,0.65,255,100);
+this.LeftTrans = map(this.differenceLeft,0,0.65,255,00);
 
 
 // fill(100,100,this.crosshatch,this.LeftTrans);
+fill(100,this.crosshatch,100,this.LeftTrans);
+
 
 this.leftCheek = positions.chin;
 beginShape();
@@ -314,31 +316,55 @@ this.eyePointL = segment_average([positions.left_eye[3],positions.nose_bridge[2]
 this.eyeOutL = segment_average([positions.chin[1],positions.left_eye[5]]);
 this.nosePointL = segment_average([positions.nose_tip[0],positions.nose_tip[1],positions.chin[2]])
 // this.nosePoint2l = segment_average([this.]);
+this.eyePointR = segment_average([positions.right_eye[0],positions.nose_bridge[2]]);
+this.eyeOutR = segment_average([positions.chin[15],positions.right_eye[4]]);
+this.nosePointR = segment_average([positions.nose_tip[3],positions.nose_tip[4],positions.chin[13]])
+this.bridgebottom = positions.nose_bridge[2];
+this.bridgetop = positions.nose_bridge[1];
 
-beginShape();//left 
+
+
+// fill(this.crosshatch,100,100,this.RightTrans);
+// beginShape();//left 
+// // curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
+// // curveVertex(this.nosePointL[0],this.nosePointL[1]);
+// curveVertex(this.eyePointL[0],this.eyePointL[1]);
+// curveVertex(this.eyePointL[0],this.eyePointL[1]);
 // curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
 // curveVertex(this.nosePointL[0],this.nosePointL[1]);
+// endShape(CLOSE);
+
+
+
+// noFill();
+fill(150,this.highL,150,100);
+// beginShape();//right
+// curveVertex(this.eyePointR[0],this.eyePointR[1]);
+// curveVertex(this.eyePointR[0],this.eyePointR[1]);
+// curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
+// curveVertex(this.nosePointR[0],this.nosePointR[1]);
+// endShape(CLOSE);
+beginShape();//left 
 curveVertex(this.eyePointL[0],this.eyePointL[1]);
 curveVertex(this.eyePointL[0],this.eyePointL[1]);
 curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
 curveVertex(this.nosePointL[0],this.nosePointL[1]);
-endShape(CLOSE);
+// endShape(CLOSE);
+curveVertex(this.bridgebottom[0],this.bridgebottom[1]);
 
-this.eyePointR = segment_average([positions.right_eye[0],positions.nose_bridge[2]]);
-this.eyeOutR = segment_average([positions.chin[15],positions.right_eye[4]]);
-this.nosePointR = segment_average([positions.nose_tip[3],positions.nose_tip[4],positions.chin[13]])
 
-// fill(this.crosshatch,100,100,this.RightTrans);
 
-beginShape();//right
-curveVertex(this.eyePointR[0],this.eyePointR[1]);
-curveVertex(this.eyePointR[0],this.eyePointR[1]);
-curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
+// beginShape();//right
+// curveVertex(this.eyePointR[0],this.eyePointR[1]);
+// curveVertex(this.eyePointR[0],this.eyePointR[1]);
 curveVertex(this.nosePointR[0],this.nosePointR[1]);
+curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
+curveVertex(this.bridgetop[0],this.bridgetop[1]);
+curveVertex(this.bridgetop[0],this.bridgetop[1]);
+
 endShape(CLOSE);
 
-
-
+noFill();
 stroke(landmark);
 //++++++++++++++++++++++++++++++++LIPS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 this.bottomLip = positions.bottom_lip;//----------------------Bottom Lip----
@@ -441,7 +467,9 @@ stroke(landmark);
 //++++++++++++++++++++++++++++++EYEBROWS++++++++++++++++++++++++++++++
 //left_eyebrow 17-21  ,,  right_eyebrow 22-26
 
-// strokeWeight(0.1);
+strokeWeight(this.brows);
+
+
 
 this.leftEB = positions.left_eyebrow[0];//---------------left
 this.leftEBOne = positions.left_eyebrow[1];
@@ -512,10 +540,10 @@ endShape();
     this.eyes = map(settings[0],0,100,1.8,3);
     this.hair = map(settings[1],0,100,3.5,4.2);
     this.skin = map(settings[2],0,100,5.5,6);
-    this.brows =map(settings[3],0,100,4,5,);
-    this.teeth =map(settings[4],0,100,7.2,8);
+    this.brows =map(settings[3],0,100,0.01,0.2,);
+    this.highL =map(settings[4],0,100,120,255);
     this.dimples = map(settings[5],0,100,-1,1);
-    this.crosshatch = map(settings[6],0,100,150,255);
+    this.crosshatch = map(settings[6],0,100,120,255);
 
     
   }
@@ -529,12 +557,12 @@ endShape();
 
 
     settings[0]=map(this.eyes,1.8,3,0,100);
-    settings[1] = map(this.hair,3.5,4.2,0,100);
+    settings[1]=map(this.hair,3.5,4.2,0,100);
     settings[2]=map(this.skin,5.5,6,0,100);
-    settings[3]=map(this.brows,4,5,0,100);
-    settings[4]=map(this.teeth,7.2,8,0,100);
+    settings[3]=map(this.brows,1,5,0,100);
+    settings[4]=map(this.highL,120,255,0,100);
     settings[5]=map(this.dimples,-1,1,0,100);
-    settings[6]=map(this.crosshatch,150,255,0,100);
+    settings[6]=map(this.crosshatch,0,255,0,100);
 
     return settings;
   }
