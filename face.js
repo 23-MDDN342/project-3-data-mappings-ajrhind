@@ -4,7 +4,7 @@
  */  
 
 // remove this or set to false to enable full program (load will be slower)
-var DEBUG_MODE = true;
+var DEBUG_MODE = false;
 
 // this can be used to set the number of sliders to show
 var NUM_SLIDERS = 8;
@@ -312,57 +312,68 @@ endShape(CLOSE);
 // fill(this.crosshatch,100,100,this.LeftTrans);
 
 // stroke(highlightS);
-this.eyePointL = segment_average([positions.left_eye[3],positions.nose_bridge[2]]);
-this.eyeOutL = segment_average([positions.chin[1],positions.left_eye[5]]);
+// this.eyePointL = segment_average([positions.left_eye[3],positions.nose_bridge[2]]);
+this.eyePointL = positions.left_eye[3];
+// this.eyeOutL = segment_average([positions.chin[1],positions.left_eye[5]]);
+this.eyeOutL = positions.left_eye[0];
 this.nosePointL = segment_average([positions.nose_tip[0],positions.nose_tip[1],positions.chin[2]])
+
 // this.nosePoint2l = segment_average([this.]);
 this.eyePointR = segment_average([positions.right_eye[0],positions.nose_bridge[2]]);
 this.eyeOutR = segment_average([positions.chin[15],positions.right_eye[4]]);
 this.nosePointR = segment_average([positions.nose_tip[3],positions.nose_tip[4],positions.chin[13]])
-this.bridgebottom = positions.nose_bridge[2];
-this.bridgetop = positions.nose_bridge[1];
+
+this.clownLineL = positions.left_eyebrow[2];
+this.clownLineR = positions.right_eyebrow[2];
+
+
+// this.bridgebottom = positions.nose_bridge[2];
+// this.bridgetop = positions.nose_bridge[1];
 
 
 
+fill(150,this.highL,150,100);
 // fill(this.crosshatch,100,100,this.RightTrans);
+beginShape();//left 
+// curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
+// curveVertex(this.nosePointL[0],this.nosePointL[1]);
+curveVertex(this.eyePointL[0],this.eyePointL[1]);
+curveVertex(this.eyePointL[0],this.eyePointL[1]);
+curveVertex(this.clownLineL[0],this.clownLineL[1]);
+curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
+curveVertex(this.nosePointL[0],this.nosePointL[1]);
+endShape(CLOSE);
+
+
+// noFill();
+beginShape();//right
+curveVertex(this.eyePointR[0],this.eyePointR[1]);
+curveVertex(this.eyePointR[0],this.eyePointR[1]);
+curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
+curveVertex(this.nosePointR[0],this.nosePointR[1]);
+endShape(CLOSE);
+
+
+//sunnies B)
 // beginShape();//left 
-// // curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
-// // curveVertex(this.nosePointL[0],this.nosePointL[1]);
 // curveVertex(this.eyePointL[0],this.eyePointL[1]);
 // curveVertex(this.eyePointL[0],this.eyePointL[1]);
 // curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
 // curveVertex(this.nosePointL[0],this.nosePointL[1]);
-// endShape(CLOSE);
+// // endShape(CLOSE);
+// curveVertex(this.bridgebottom[0],this.bridgebottom[1]);
 
 
 
-// noFill();
-fill(150,this.highL,150,100);
-// beginShape();//right
-// curveVertex(this.eyePointR[0],this.eyePointR[1]);
-// curveVertex(this.eyePointR[0],this.eyePointR[1]);
-// curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
+// // beginShape();//right
+// // curveVertex(this.eyePointR[0],this.eyePointR[1]);
+// // curveVertex(this.eyePointR[0],this.eyePointR[1]);
 // curveVertex(this.nosePointR[0],this.nosePointR[1]);
+// curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
+// curveVertex(this.bridgetop[0],this.bridgetop[1]);
+// curveVertex(this.bridgetop[0],this.bridgetop[1]);
+
 // endShape(CLOSE);
-beginShape();//left 
-curveVertex(this.eyePointL[0],this.eyePointL[1]);
-curveVertex(this.eyePointL[0],this.eyePointL[1]);
-curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
-curveVertex(this.nosePointL[0],this.nosePointL[1]);
-// endShape(CLOSE);
-curveVertex(this.bridgebottom[0],this.bridgebottom[1]);
-
-
-
-// beginShape();//right
-// curveVertex(this.eyePointR[0],this.eyePointR[1]);
-// curveVertex(this.eyePointR[0],this.eyePointR[1]);
-curveVertex(this.nosePointR[0],this.nosePointR[1]);
-curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
-curveVertex(this.bridgetop[0],this.bridgetop[1]);
-curveVertex(this.bridgetop[0],this.bridgetop[1]);
-
-endShape(CLOSE);
 
 noFill();
 stroke(landmark);
