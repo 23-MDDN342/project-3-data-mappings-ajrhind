@@ -4,7 +4,7 @@
  */  
 
 // remove this or set to false to enable full program (load will be slower)
-var DEBUG_MODE = false;
+var DEBUG_MODE = true;
 
 // this can be used to set the number of sliders to show
 var NUM_SLIDERS = 8;
@@ -82,10 +82,19 @@ function Face(eyes,hair,skin,brows,highL,dimples,crosshatch, crosshatchL) {
   let highlightS = color(107, 255, 134);
   let shadow = color(51, 166, 72);
 
+  const lavender = color(199,125,242);
+
+  //hair
+  const green = color(98,217,69);
+  const cyan = color(78,255,239);
+  const yellow = color(248, 243, 43);
+  const red = color(239, 45,86);
+  
+
   // this.uhhGre = lerp(highlightS, shadow, 0.2);
 
 
-  this.colorOptions = [landmark,highlight,shadow]
+  this.colorOptions = [green, lavender,cyan,red,yellow]
 
 
 
@@ -306,8 +315,20 @@ curveVertex(this.chinCheekL[0],this.chinCheekL[1]);
 endShape(CLOSE);
 
 
-//-------------------------HIGHLIGHT------------------
 
+//++++++++++++++++++++++++++++++++++++++++++DIMPLES++++++++++++++++++++++++++++++++++++++++
+this.dimplePlaceL = segment_average([positions.chin[2],positions.nose_bridge[3]]);
+this.dimplePlaceR = segment_average([positions.chin[14],positions.nose_bridge[3]]);
+
+
+ if(this.dimples>25){
+  fill(red);
+  ellipse(this.dimplePlaceL[0],this.dimplePlaceL[1],0.5);
+  ellipse(this.dimplePlaceR[0],this.dimplePlaceR[1],0.5);
+
+ }
+//-------------------------CLOWN LINES------------------
+//change colour with eyes
 
 // fill(this.crosshatch,100,100,this.LeftTrans);
 
@@ -316,12 +337,14 @@ endShape(CLOSE);
 this.eyePointL = positions.left_eye[3];
 // this.eyeOutL = segment_average([positions.chin[1],positions.left_eye[5]]);
 this.eyeOutL = positions.left_eye[0];
-this.nosePointL = segment_average([positions.nose_tip[0],positions.nose_tip[1],positions.chin[2]])
+this.nosePointR = segment_average([positions.nose_bridge[3],positions.right_eye[4],positions.chin[14]])
 
 // this.nosePoint2l = segment_average([this.]);
-this.eyePointR = segment_average([positions.right_eye[0],positions.nose_bridge[2]]);
-this.eyeOutR = segment_average([positions.chin[15],positions.right_eye[4]]);
-this.nosePointR = segment_average([positions.nose_tip[3],positions.nose_tip[4],positions.chin[13]])
+// this.eyePointR = segment_average([positions.right_eye[0],positions.nose_bridge[2]]);
+// this.eyeOutR = segment_average([positions.chin[15],positions.right_eye[4]]);
+this.eyePointR = positions.right_eye[0];
+this.eyeOutR = positions.right_eye[3];
+this.nosePointL = segment_average([positions.nose_bridge[3],positions.left_eye[4],positions.chin[2]])
 
 this.clownLineL = positions.left_eyebrow[2];
 this.clownLineR = positions.right_eyebrow[2];
@@ -339,7 +362,7 @@ beginShape();//left
 // curveVertex(this.nosePointL[0],this.nosePointL[1]);
 curveVertex(this.eyePointL[0],this.eyePointL[1]);
 curveVertex(this.eyePointL[0],this.eyePointL[1]);
-curveVertex(this.clownLineL[0],this.clownLineL[1]);
+curveVertex(this.clownLineL[0],this.clownLineL[1]-0.25);
 curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
 curveVertex(this.nosePointL[0],this.nosePointL[1]);
 endShape(CLOSE);
@@ -349,6 +372,8 @@ endShape(CLOSE);
 beginShape();//right
 curveVertex(this.eyePointR[0],this.eyePointR[1]);
 curveVertex(this.eyePointR[0],this.eyePointR[1]);
+curveVertex(this.clownLineR[0],this.clownLineR[1]-0.25);
+
 curveVertex(this.eyeOutR[0],this.eyeOutR[1]);
 curveVertex(this.nosePointR[0],this.nosePointR[1]);
 endShape(CLOSE);
@@ -378,6 +403,7 @@ endShape(CLOSE);
 noFill();
 stroke(landmark);
 //++++++++++++++++++++++++++++++++LIPS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//lip colour change with skin?
 this.bottomLip = positions.bottom_lip;//----------------------Bottom Lip----
 beginShape();
 for(let i =0;i<this.bottomLip.length; i++){
@@ -393,38 +419,36 @@ for(let i =0;i<this.topLip.length; i++){
 //shadow
 stroke(shadow);
 strokeWeight(0.02);
-beginShape();//bottom part------------------
-curveVertex(this.bottomLip[1][0],this.bottomLip[1][1]);
-for(let i = 2; i<5; i++){
-  curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
- }
- curveVertex(this.bottomLip[5][0],this.bottomLip[5][1]);
-endShape();
+// beginShape();//bottom part------------------
+// curveVertex(this.bottomLip[1][0],this.bottomLip[1][1]);
+// for(let i = 2; i<5; i++){
+//   curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
+//  }
+//  curveVertex(this.bottomLip[5][0],this.bottomLip[5][1]);
+// endShape();
 
-beginShape();
-curveVertex(this.topLip[9][0],this.topLip[9][1]);
-for(let i =8;i<11;i++){
-  curveVertex(this.topLip[i][0],this.topLip[i][1])
-}
-curveVertex(this.topLip[10][0],this.topLip[10][1]);
-endShape();
-
-
+// beginShape();
+// curveVertex(this.topLip[9][0],this.topLip[9][1]);
+// for(let i =8;i<11;i++){
+//   curveVertex(this.topLip[i][0],this.topLip[i][1])
+// }
+// curveVertex(this.topLip[10][0],this.topLip[10][1]);
+// endShape();
 //highlight
-stroke(highlightS);
-  beginShape();//Bottom
-  for(let i = 7; i<12; i++){
-    curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
-   }
-endShape();
+// stroke(highlightS);
+//   beginShape();//Bottom
+//   for(let i = 7; i<12; i++){
+//     curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
+//    }
+// endShape();
 
-beginShape();//Top
-  curveVertex(this.topLip[2][0],this.topLip[2][1]);
-for(let i =1;i<6; i++){
-  curveVertex(this.topLip[i][0],this.topLip[i][1])
-}
-curveVertex(this.topLip[5][0],this.topLip[5][1]);
-endShape();
+// beginShape();//Top
+//   curveVertex(this.topLip[2][0],this.topLip[2][1]);
+// for(let i =1;i<6; i++){
+//   curveVertex(this.topLip[i][0],this.topLip[i][1])
+// }
+// curveVertex(this.topLip[5][0],this.topLip[5][1]);
+// endShape();
 
 stroke(landmark);
 
@@ -435,6 +459,7 @@ this.topNoseB = positions.nose_bridge[0];
 this.leftNoseT = positions.nose_tip[0];
 this.rightNoseT = positions.nose_tip[4];
 this.middleNoseT = positions.nose_tip[2];
+this.clownNose = segment_average([positions.nose_tip[2],positions.nose_bridge[3]]);
 
 // this.leftBrowRidge = segment_average([positions.nose_bridge[1],positions.left_eye[3]]);
 // this.rightBrowRidge = segment_average([positions.nose_bridge[1],positions.right_eye[0]]);
@@ -451,25 +476,28 @@ curveVertex(this.rightBrowRidge[0],this.rightBrowRidge[1]);
 // curveVertex(this.rightBrowRidge[0],this.rightBrowRidge[1]);
 endShape(CLOSE);
 
-//-------------SHADOW---------------------
+fill(200,100,100,100);
+ellipse(this.clownNose[0],this.clownNose[1],0.8);
+noFill();
 
 
 //---------------HIGHLIGHT-------------------
 // stroke(highlight);
-noStroke();
+// noStroke();
+stroke(landmark);
 this.noseHighlight = positions.nose_bridge;//HIGHLIGHT
 this.noseHLR = segment_average([positions.nose_bridge[3],positions.nose_tip[1]]);
 this.noseHLL = segment_average([positions.nose_bridge[3],positions.nose_tip[3]]);
 
-// fill(highlight,50);
-beginShape();
-curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
-curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
-// curveVertex(this.noseHighlight[1][0],this.noseHighlight[1][1])
-// curveVertex(this.noseHighlight[2][0],this.noseHighlight[2][1])
-curveVertex(this.noseHLR[0],this.noseHLR[1])
-curveVertex(this.noseHLL[0],this.noseHLL[1])
-endShape(CLOSE);
+// // fill(highlight,50);
+// beginShape();
+// curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
+// curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
+// // curveVertex(this.noseHighlight[1][0],this.noseHighlight[1][1])
+// // curveVertex(this.noseHighlight[2][0],this.noseHighlight[2][1])
+// curveVertex(this.noseHLR[0],this.noseHLR[1])
+// curveVertex(this.noseHLL[0],this.noseHLL[1])
+// endShape(CLOSE);
 
 
 noFill();
@@ -477,10 +505,9 @@ strokeWeight(0.02);
 stroke(landmark);
 //++++++++++++++++++++++++++++++EYEBROWS++++++++++++++++++++++++++++++
 //left_eyebrow 17-21  ,,  right_eyebrow 22-26
+//colour change with hair colour too??
 
 strokeWeight(this.brows);
-
-
 
 this.leftEB = positions.left_eyebrow[0];//---------------left
 this.leftEBOne = positions.left_eyebrow[1];
@@ -515,6 +542,26 @@ beginShape();
   curveVertex(this.rightEBend[0],this.rightEBend[1]);
 endShape();
 
+noStroke();
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++HAIR+++++++++++++++++++++++++++++++++++++++++++
+// this.clownHair = segment_average([positions.chin[0],positions.chin[15],positions.nose_bridge[0]]);
+this.clownHair = positions.nose_bridge[0]
+this.clownHairL = positions.left_eyebrow[3];
+this.clownHairR = positions.right_eyebrow[2];
+
+this.foreheadB = positions.chin[8];
+this.foreheadT = positions.nose_tip[3];
+this.foreheadDiff =this.foreheadB[0]-this.foreheadT[0];
+this.forehead = map(this.foreheadDiff,0,1,0,100);
+
+
+
+stroke(100,100,200);
+ellipse(this.clownHair[0],this.clownHair[1]-1.7,1);
+ellipse(this.clownHairL[0],this.clownHairL[1]-1,1);
+ellipse(this.clownHairR[0],this.clownHairR[1]-1,1);
+
+
 
 
   }
@@ -547,16 +594,15 @@ endShape();
     // this.num_eyes = int(map(settings[0], 0, 100, 1, 2));
     // this.eye_shift = map(settings[1], 0, 100, -2, 2);
     // this.mouth_size = map(settings[2], 0, 100, 0.5, 8);
-    
+  
     this.eyes = map(settings[0],0,100,1.8,3);
-    this.hair = map(settings[1],0,100,3.5,4.2);
+    this.hair = map(settings[1],0,100,1,5);
     this.skin = map(settings[2],0,100,5.5,6);
     this.brows =map(settings[3],0,100,0.01,0.2,);
     this.highL =map(settings[4],0,100,120,255);
-    this.dimples = map(settings[5],0,100,-1,1);
+    this.dimples = map(settings[5],0,100,0,50);
     this.crosshatch = map(settings[6],0,100,120,255);
 
-    
   }
 
   /* get internal properties as list of numbers 0-100 */
@@ -568,18 +614,16 @@ endShape();
 
 
     settings[0]=map(this.eyes,1.8,3,0,100);
-    settings[1]=map(this.hair,3.5,4.2,0,100);
+    settings[1]=map(this.hair,1,5,1,100);
     settings[2]=map(this.skin,5.5,6,0,100);
     settings[3]=map(this.brows,1,5,0,100);
     settings[4]=map(this.highL,120,255,0,100);
-    settings[5]=map(this.dimples,-1,1,0,100);
+    settings[5]=map(this.dimples,0,50,0,100);
     settings[6]=map(this.crosshatch,0,255,0,100);
 
     return settings;
   }
 }
-
-
 
     // head
     // ellipseMode(CENTER);
@@ -645,19 +689,6 @@ endShape();
   //  //ellipse(0,0, 0.5,0.5) center point
   //  //rect(-2,-2,4.5,4) sizing debug 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   
 // this.bottomlipLeft = positions.bottom_lip[5];
 // this.bottomlipRight = positions.bottom_lip[1];
@@ -668,204 +699,3 @@ endShape();
 // endShape(CLOSE);
 
 
-//-----------------------------------------------------------HIGHLIGHT-----------------------------
-// push();
-// noFill();
-// stroke(100,200,100);//green
-// beginShape();//nose forehead thing
-// vertex(-0.3,1);
-// curveVertex(-0.3,1);
-// curveVertex(-0.5,3.5);//bottom left
-// curveVertex(0.5,3.5);//bottom right
-// curveVertex(0.3,1);
-// curveVertex(-this.sideRight/2+1,-1.6);//left top
-// curveVertex(-this.sideRight/2,-3);//top mid 
-// curveVertex(-this.sideRight/2-1,-1.6);//top right
-// endShape(CLOSE);
-
-// beginShape();//cheek left
-// curveVertex(-1,1);
-// curveVertex(-1.8,4);
-// curveVertex((-this.sideRight/2)-4,0);
-// curveVertex(-2,0);
-// endShape(CLOSE);
-
-// beginShape();//cheek right
-// curveVertex(1,1);
-// curveVertex(1.8,4);
-// curveVertex((-this.sideRight/2)+4,0);
-// curveVertex(2,0);
-// endShape(CLOSE);
-
-// // --------------------SHADOWS-----------------------------MID-------------------------------
-
-// noFill();
-// stroke(200,100,100);//pink
-// strokeWeight(0.05);
-// beginShape();//left cheek____________
-//   vertex(-6.8,0);
-//   curveVertex(-6.8,0);
-//   curveVertex(-5.7,6);
-//   vertex(-2.2,9.2);
-//   curveVertex(-this.cheek-this.sideRight/1.5,4);
-// endShape(CLOSE);
-
-// beginShape();//right cheek___________
-//   vertex(6.8,0);
-//   curveVertex(6.8,0);
-//   curveVertex(5.7,6);
-//   vertex(2.2,9.2);
-//   curveVertex(this.cheek-this.sideRight/1.5,4);
-// endShape(CLOSE);
-
-// beginShape();//nose_______________
-//   vertex(0,4);//mid
-//   curveVertex(0,4);
-//   curveVertex(1.5,4);
-//   curveVertex(1.5+this.sideRight/2,5);
-//   curveVertex(this.sideRight+0.7,this.nose)//=======
-//   curveVertex(this.sideRight-0.7,this.nose);//mid
-//   curveVertex(-1.5+this.sideRight/3,5);
-//   curveVertex(-1.5,4);
-//   curveVertex(0,4)
-// endShape(CLOSE);
-
-// beginShape();//eye left_______________
-//   vertex(-3.5,-1);
-//   curveVertex(-4,-1);
-//   curveVertex(-5,-0);
-//   curveVertex(-4.5+this.sideRight/2,1.5);//mid
-//   curveVertex(-1.75,this.eyes-0.1);
-//   curveVertex(-1,1.5); 
-//   curveVertex(-1.5,-0.5);
-// endShape(CLOSE);
-
-// beginShape();//eye right_______________
-//   vertex(3.5,-1);
-//   curveVertex(4,-1);
-//   curveVertex(5,0);
-//   curveVertex(4.5+this.sideRight/2,1.5)//mid
-//   curveVertex(1.75,this.eyes-0.1);
-//   curveVertex(1,1.5);
-//   curveVertex(1.5,-0.5);
-// endShape(CLOSE);
-
-// beginShape();//temple left_________________
-//   vertex(-6.85,-1);
-//   curveVertex(-6.85,-1);
-//   curveVertex(-this.temples-this.sideRight/2,-4);
-//   curveVertex(-5.4,-6);
-//   curveVertex(-6.4,-4.3);
-// endShape(CLOSE);
-
-// beginShape();//temple right___________________
-//   vertex(6.85,-1);
-//   curveVertex(6.85,-1);
-//   curveVertex(this.temples-this.sideRight/2,-4);
-//   curveVertex(5.4,-6);
-//   curveVertex(6.4,-4.3);
-// endShape(CLOSE);
-
-// beginShape();//mouf__________________
-//   curveVertex(-1,6.5);
-//   curveVertex(1,6.5);
-//   vertex(1.9,7.2);
-//   curveVertex(this.sideRight,this.mouth);//
-//   curveVertex(-1.9 ,7.2);
-// endShape(CLOSE);
-
-// //--------------------------------------------------------------DARK---------------------------
-// noFill();
-// stroke(100,100,200);//blue
-// strokeWeight(0.05);
-// beginShape();//left cheek____________
-//   vertex(-6.6,2);
-//   curveVertex(-6.6,2);
-//   curveVertex(-5.7,6);
-//   vertex(-4,7.8);
-//   curveVertex(-(this.cheek*1.3)-this.sideRight/1.5,4);
-// endShape(CLOSE);
-
-// beginShape();//right cheek___________
-//   vertex(6.6,2);
-//   curveVertex(6.6,2);
-//   curveVertex(5.7,6);
-//   vertex(4,7.8);
-//   curveVertex((this.cheek*1.3)-this.sideRight/1.5,4);
-// endShape(CLOSE);
-
-// beginShape();//nose_______________
-//   vertex(0,4.8);//mid
-//   curveVertex(1,4.5);
-//   curveVertex(1+this.sideRight/2,5);
-//   curveVertex(this.sideRight+0.4,this.nose-0.1)
-//   curveVertex(this.sideRight-0.4,this.nose-0.1);//mid
-//   curveVertex(-1+this.sideRight/3,5);
-//   curveVertex(-1,4.5);
-//   curveVertex(0,4.8)
-// endShape(CLOSE);
-
-// // if(evilness){
-// //   fill(redEyes);
-// // }
-// // else(
-// //   fill(dark)
-// // )
-// //////////////////////////////////////////////////////////////////////////////////////FIRST///////////////////////////////////////////////////////////////////////////////////
-// this.leftEyeFar = positions.left_eye[0];// far left - 36
-// this.leftEyeOne = positions.left_eye[1];
-// this.leftEyeTwo = positions.left_eye[2]
-// this.leftEyeClose = positions.left_eye[3];//far right - 39
-// this.leftEyeFour = positions.left_eye[4]
-// this.leftEyeBM = positions.left_eye[5];//left eye bottom middle - 41
-
-// beginShape();//eye left_______________
-// curveVertex(this.leftEyeFar[0],this.leftEyeFar[1]);// far far left
-//   // vertex(-3,-0.4);
-//   curveVertex(-this.leftEyeOne[0],this.leftEyeOne[1]);
-//   // curveVertex(-3+this.sideRight/2,0.8);//mid point bottom-
-//   curveVertex(this.leftEyeTwo[0],this.leftEyeTwo[1]);
-//   curveVertex(this.leftEyeClose[0],this.leftEyeClose[1]);//far far right
-//   curveVertex(this.leftEyeFour[0],this.leftEyeFour[1])
-//   curveVertex(this.leftEyeBM[0],this.leftEyeBM[1]);//mid point bottom-
-// endShape(CLOSE);
-
-// beginShape();//eye right_______________
-//   vertex(3,-0.4);
-//   curveVertex(3,-0.4);
-//   curveVertex(3.8,0);
-//   curveVertex(3+this.sideRight/2,0.8)//mid
-//   curveVertex(1.9,(this.eyes/1.3)-1);
-//   curveVertex(1.7,-0.1);
-// endShape(CLOSE);
-
-// // fill(dark);
-// beginShape();//temple left_________________
-//   vertex(-6.8,-1.5);
-//   curveVertex(-6.8,-1.5);
-//   curveVertex((-this.temples-1)-this.sideRight/2,-4);
-//   curveVertex(-6.3,-4.5);
-// endShape(CLOSE);
-
-// beginShape();//temple right___________________
-//   vertex(6.8,-1.5);
-//   curveVertex(6.8,-1.5);
-//   curveVertex((this.temples+1)-this.sideRight/2,-4);
-//   curveVertex(6.3,-4.5);
-// endShape(CLOSE);
-
-// beginShape();//mouf__________________
-//   curveVertex(-1,6.6);
-//   curveVertex(1,6.6);
-//   vertex(1.9,7.2);
-//   curveVertex(0,7);
-//   curveVertex(-1.9 ,7.2);
-// endShape(CLOSE);
-
-// // this.rightEyex = positions.right_eye[0][0];
-// // this.rightEyey = positions.right_eye[0][1];
-
-// // fill(255)
-// // ellipse(this.rightEyex,this.rightEyey,1);
-
-// pop();
