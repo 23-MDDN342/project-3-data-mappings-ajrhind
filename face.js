@@ -176,19 +176,6 @@ noFill();
 
 stroke(landmark)
 //=======================DEBUG==============================
-this.leftEye = positions.left_eye;//------------------
-  beginShape();
-  for(let i =0; i<this.leftEye.length; i++){
-  curveVertex(this.leftEye[i][0],this.leftEye[i][1]);// far far left
-}
-endShape(CLOSE);
-
-this.rightEye = positions.right_eye;//------------------
-  beginShape();
-  for(let i =0; i<this.rightEye.length; i++){
-  curveVertex(this.rightEye[i][0], this.rightEye[i][1]);
-}
-endShape(CLOSE);
 
 //=======================================================
 
@@ -326,11 +313,13 @@ this.dimplePlaceR = segment_average([positions.chin[14],positions.nose_bridge[3]
   ellipse(this.dimplePlaceL[0],this.dimplePlaceL[1],0.5);
   ellipse(this.dimplePlaceR[0],this.dimplePlaceR[1],0.5);
 
- }
-//-------------------------CLOWN LINES------------------
+ }  
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++CLOWN LINES+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //change colour with eyes
 
 // fill(this.crosshatch,100,100,this.LeftTrans);
+
+
 
 // stroke(highlightS);
 // this.eyePointL = segment_average([positions.left_eye[3],positions.nose_bridge[2]]);
@@ -355,7 +344,7 @@ this.clownLineR = positions.right_eyebrow[2];
 
 
 
-fill(150,this.highL,150,100);
+// fill(150,this.highL,150,100);
 // fill(this.crosshatch,100,100,this.RightTrans);
 beginShape();//left 
 // curveVertex(this.eyeOutL[0],this.eyeOutL[1]);
@@ -459,7 +448,7 @@ this.topNoseB = positions.nose_bridge[0];
 this.leftNoseT = positions.nose_tip[0];
 this.rightNoseT = positions.nose_tip[4];
 this.middleNoseT = positions.nose_tip[2];
-this.clownNose = segment_average([positions.nose_tip[2],positions.nose_bridge[3]]);
+this.clownNose = segment_average([positions.nose_tip[2],positions.nose_bridge[2]]);
 
 // this.leftBrowRidge = segment_average([positions.nose_bridge[1],positions.left_eye[3]]);
 // this.rightBrowRidge = segment_average([positions.nose_bridge[1],positions.right_eye[0]]);
@@ -503,6 +492,22 @@ this.noseHLL = segment_average([positions.nose_bridge[3],positions.nose_tip[3]])
 noFill();
 strokeWeight(0.02);
 stroke(landmark);
+
+//+++++++++++++++++++++++++++++++++++++EYES+++++++++++++++++++++++++++++++++++++
+this.leftEye = positions.left_eye;//------------------
+  beginShape();
+  for(let i =0; i<this.leftEye.length; i++){
+  curveVertex(this.leftEye[i][0],this.leftEye[i][1]);// far far left
+}
+endShape(CLOSE);
+
+this.rightEye = positions.right_eye;//------------------
+  beginShape();
+  for(let i =0; i<this.rightEye.length; i++){
+  curveVertex(this.rightEye[i][0], this.rightEye[i][1]);
+}
+endShape(CLOSE);
+
 //++++++++++++++++++++++++++++++EYEBROWS++++++++++++++++++++++++++++++
 //left_eyebrow 17-21  ,,  right_eyebrow 22-26
 //colour change with hair colour too??
@@ -555,8 +560,17 @@ this.foreheadDiff =this.foreheadB[0]-this.foreheadT[0];
 this.forehead = map(this.foreheadDiff,0,1,0,100);
 
 
+if (this.eyes>=0&&this.eyes<=25){
+  fill(red);
+}else if(this.eyes>=26&&this.eyes<=50){
+  fill(cyan);
+}else if(this.eyes>=51&&this.eyes<=75){
+  fill(yellow);
+}else if(this.eyes>=76&&this.eyes<=100){
+  fill(green);
+}
 
-stroke(100,100,200);
+// stroke(100,100,200);
 ellipse(this.clownHair[0],this.clownHair[1]-1.7,1);
 ellipse(this.clownHairL[0],this.clownHairL[1]-1,1);
 ellipse(this.clownHairR[0],this.clownHairR[1]-1,1);
@@ -595,7 +609,7 @@ ellipse(this.clownHairR[0],this.clownHairR[1]-1,1);
     // this.eye_shift = map(settings[1], 0, 100, -2, 2);
     // this.mouth_size = map(settings[2], 0, 100, 0.5, 8);
   
-    this.eyes = map(settings[0],0,100,1.8,3);
+    this.eyes = map(settings[0],0,100,0,100);
     this.hair = map(settings[1],0,100,1,5);
     this.skin = map(settings[2],0,100,5.5,6);
     this.brows =map(settings[3],0,100,0.01,0.2,);
@@ -613,7 +627,7 @@ ellipse(this.clownHairR[0],this.clownHairR[1]-1,1);
     // settings[2] = map(this.mouth_size, 0.5, 8, 0, 100);
 
 
-    settings[0]=map(this.eyes,1.8,3,0,100);
+    settings[0]=map(this.eyes,0,100,0,100);
     settings[1]=map(this.hair,1,5,1,100);
     settings[2]=map(this.skin,5.5,6,0,100);
     settings[3]=map(this.brows,1,5,0,100);
