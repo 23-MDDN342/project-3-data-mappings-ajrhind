@@ -235,16 +235,6 @@ stroke(landmark)
 // this.draw_segmentMess(positions.chin);// cool code mess for the cross hatching
 // this.draw_segmentMess2(positions.chin);// cool code mess for the cross hatching
 
-this.stipple = function(){
-
-  for(i = 0;i<50;i++){
-      x=i/2;
-      y=0;
-      ellipse(x,y,0.05);
-  }
-}
-
-
 //-------------------------------RIGHT CHEEK-------------------------------
 stroke(shadow);
 this.cheekboneR = segment_average([positions.bottom_lip[0],positions.chin[14]]);
@@ -342,7 +332,15 @@ this.clownLineR = positions.right_eyebrow[2];
 // this.bridgebottom = positions.nose_bridge[2];
 // this.bridgetop = positions.nose_bridge[1];
 
-
+if (this.eyes>=0&&this.eyes<=25){
+  fill(red);
+}else if(this.eyes>=26&&this.eyes<=50){
+  fill(cyan);
+}else if(this.eyes>=51&&this.eyes<=75){
+  fill(yellow);
+}else if(this.eyes>=76&&this.eyes<=100){
+  fill(green);
+}
 
 // fill(150,this.highL,150,100);
 // fill(this.crosshatch,100,100,this.RightTrans);
@@ -393,6 +391,17 @@ noFill();
 stroke(landmark);
 //++++++++++++++++++++++++++++++++LIPS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //lip colour change with skin?
+if (this.skin>=0&&this.skin<=25){
+  fill(red);
+}else if(this.skin>=26&&this.skin<=50){
+  fill(cyan);
+}else if(this.skin>=51&&this.skin<=75){
+  fill(yellow);
+}else if(this.skin>=76&&this.skin<=100){
+  fill(green);
+}
+
+
 this.bottomLip = positions.bottom_lip;//----------------------Bottom Lip----
 beginShape();
 for(let i =0;i<this.bottomLip.length; i++){
@@ -405,39 +414,7 @@ for(let i =0;i<this.topLip.length; i++){
   curveVertex(this.topLip[i][0],this.topLip[i][1])
 }endShape(CLOSE);
 
-//shadow
-stroke(shadow);
-strokeWeight(0.02);
-// beginShape();//bottom part------------------
-// curveVertex(this.bottomLip[1][0],this.bottomLip[1][1]);
-// for(let i = 2; i<5; i++){
-//   curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
-//  }
-//  curveVertex(this.bottomLip[5][0],this.bottomLip[5][1]);
-// endShape();
 
-// beginShape();
-// curveVertex(this.topLip[9][0],this.topLip[9][1]);
-// for(let i =8;i<11;i++){
-//   curveVertex(this.topLip[i][0],this.topLip[i][1])
-// }
-// curveVertex(this.topLip[10][0],this.topLip[10][1]);
-// endShape();
-//highlight
-// stroke(highlightS);
-//   beginShape();//Bottom
-//   for(let i = 7; i<12; i++){
-//     curveVertex(this.bottomLip[i][0],this.bottomLip[i][1]);
-//    }
-// endShape();
-
-// beginShape();//Top
-//   curveVertex(this.topLip[2][0],this.topLip[2][1]);
-// for(let i =1;i<6; i++){
-//   curveVertex(this.topLip[i][0],this.topLip[i][1])
-// }
-// curveVertex(this.topLip[5][0],this.topLip[5][1]);
-// endShape();
 
 stroke(landmark);
 
@@ -465,29 +442,9 @@ curveVertex(this.rightBrowRidge[0],this.rightBrowRidge[1]);
 // curveVertex(this.rightBrowRidge[0],this.rightBrowRidge[1]);
 endShape(CLOSE);
 
-fill(200,100,100,100);
-ellipse(this.clownNose[0],this.clownNose[1],0.8);
+fill(red);
+ellipse(this.clownNose[0],this.clownNose[1],this.noseS);
 noFill();
-
-
-//---------------HIGHLIGHT-------------------
-// stroke(highlight);
-// noStroke();
-stroke(landmark);
-this.noseHighlight = positions.nose_bridge;//HIGHLIGHT
-this.noseHLR = segment_average([positions.nose_bridge[3],positions.nose_tip[1]]);
-this.noseHLL = segment_average([positions.nose_bridge[3],positions.nose_tip[3]]);
-
-// // fill(highlight,50);
-// beginShape();
-// curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
-// curveVertex(this.noseHighlight[0][0],this.noseHighlight[0][1])
-// // curveVertex(this.noseHighlight[1][0],this.noseHighlight[1][1])
-// // curveVertex(this.noseHighlight[2][0],this.noseHighlight[2][1])
-// curveVertex(this.noseHLR[0],this.noseHLR[1])
-// curveVertex(this.noseHLL[0],this.noseHLL[1])
-// endShape(CLOSE);
-
 
 noFill();
 strokeWeight(0.02);
@@ -553,27 +510,33 @@ noStroke();
 this.clownHair = positions.nose_bridge[0]
 this.clownHairL = positions.left_eyebrow[3];
 this.clownHairR = positions.right_eyebrow[2];
+this.clownRed = positions.right_eyebrow[3];
+this.clownCyan = positions.left_eyebrow[2];
+this.clownYellow = positions.chin[0];
+this.clownGreen = positions.chin[15];
 
-this.foreheadB = positions.chin[8];
-this.foreheadT = positions.nose_tip[3];
-this.foreheadDiff =this.foreheadB[0]-this.foreheadT[0];
-this.forehead = map(this.foreheadDiff,0,1,0,100);
+// if (this.hair>=0&&this.hair<=25){
+//   fill(red);
+//   ellipse(this.clownRed[0],this.clownRed[1]-1,0.8);
+// }else if(this.hair>=26&&this.hair<=50){
+//   fill(cyan);
+//   ellipse(this.clownCyan[0],this.clownCyan[1]-1,0.8);
+// }else if(this.hair>=51&&this.hair<=75){
+//   fill(yellow);
+//   ellipse(this.clownYellow[0],this.clownYellow[1]-1.3,0.8);
+// }else if(this.hair>=76&&this.hair<=100){
+//   fill(green);
+//   ellipse(this.clownGreen[0]-0.5,this.clownGreen[1]-2,0.8);
+// }
 
 
-if (this.eyes>=0&&this.eyes<=25){
-  fill(red);
-}else if(this.eyes>=26&&this.eyes<=50){
-  fill(cyan);
-}else if(this.eyes>=51&&this.eyes<=75){
-  fill(yellow);
-}else if(this.eyes>=76&&this.eyes<=100){
-  fill(green);
-}
-
+// strokeWeight(0.02);
 // stroke(100,100,200);
-ellipse(this.clownHair[0],this.clownHair[1]-1.7,1);
-ellipse(this.clownHairL[0],this.clownHairL[1]-1,1);
-ellipse(this.clownHairR[0],this.clownHairR[1]-1,1);
+// ellipse(this.clownHair[0],this.clownHair[1]-2,1);
+// ellipse(this.clownHairL[0],this.clownHairL[1]-1.5,1);
+// ellipse(this.clownHair[0]+0.5,this.clownHairR[1]-1.5,0.7);
+// ellipse(this.clownHairR[0]+0.3,this.clownHairL[1]-1.3,1);
+// ellipse(this.clownHairR[0],this.clownHairR[1]-1.5,1);
 
 
 
@@ -610,10 +573,10 @@ ellipse(this.clownHairR[0],this.clownHairR[1]-1,1);
     // this.mouth_size = map(settings[2], 0, 100, 0.5, 8);
   
     this.eyes = map(settings[0],0,100,0,100);
-    this.hair = map(settings[1],0,100,1,5);
-    this.skin = map(settings[2],0,100,5.5,6);
-    this.brows =map(settings[3],0,100,0.01,0.2,);
-    this.highL =map(settings[4],0,100,120,255);
+    this.hair = map(settings[1],0,100,0,100);
+    this.skin = map(settings[2],0,100,0,100);
+    this.brows =map(settings[3],0,100,0.02,0.2,);
+    this.noseS =map(settings[4],0,100,0.5,1);
     this.dimples = map(settings[5],0,100,0,50);
     this.crosshatch = map(settings[6],0,100,120,255);
 
@@ -628,10 +591,10 @@ ellipse(this.clownHairR[0],this.clownHairR[1]-1,1);
 
 
     settings[0]=map(this.eyes,0,100,0,100);
-    settings[1]=map(this.hair,1,5,1,100);
-    settings[2]=map(this.skin,5.5,6,0,100);
+    settings[1]=map(this.hair,0,100,0,100);
+    settings[2]=map(this.skin,0,100,0,100);
     settings[3]=map(this.brows,1,5,0,100);
-    settings[4]=map(this.highL,120,255,0,100);
+    settings[4]=map(this.noseS,0.5,1,0,100);
     settings[5]=map(this.dimples,0,50,0,100);
     settings[6]=map(this.crosshatch,0,255,0,100);
 
