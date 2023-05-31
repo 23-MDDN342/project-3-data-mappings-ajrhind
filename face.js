@@ -44,7 +44,7 @@ function Face(eyes,hair,skin,brows,highL,dimples,crosshatch, crosshatchL) {
   this.eyes =0;
   this.hair=0;
   this.skin =0;
-  this.brows =0;
+  this.brows =0.02;
   this.highL =0;
   this.dimples =0;
   this.crosshatch =0;
@@ -84,12 +84,17 @@ function Face(eyes,hair,skin,brows,highL,dimples,crosshatch, crosshatchL) {
 
   const lavender = color(199,125,242);
 
-  //hair
   const green = color(98,217,69);
   const cyan = color(78,255,239);
   const yellow = color(248, 243, 43);
   const red = color(239, 45,86);
+  //darker
+  const greenD = color(64, 145, 44);
+  const cyanD = color(54, 179, 167);
+  const yellowD = color(248, 243, 43);
+  const redD = color(163, 29, 58);
   
+
 
   // this.uhhGre = lerp(highlightS, shadow, 0.2);
 
@@ -299,7 +304,7 @@ this.dimplePlaceR = segment_average([positions.chin[14],positions.nose_bridge[3]
 
 
  if(this.dimples>25){
-  fill(red);
+  fill(255);
   ellipse(this.dimplePlaceL[0],this.dimplePlaceL[1],0.5);
   ellipse(this.dimplePlaceR[0],this.dimplePlaceR[1],0.5);
 
@@ -332,13 +337,13 @@ this.clownLineR = positions.right_eyebrow[2];
 // this.bridgebottom = positions.nose_bridge[2];
 // this.bridgetop = positions.nose_bridge[1];
 
-if (this.eyes>=0&&this.eyes<=25){
+if (this.hair>=0&&this.hair<=25){
   fill(red);
-}else if(this.eyes>=26&&this.eyes<=50){
+}else if(this.hair>=26&&this.hair<=50){
   fill(cyan);
-}else if(this.eyes>=51&&this.eyes<=75){
+}else if(this.hair>=51&&this.hair<=75){
   fill(yellow);
-}else if(this.eyes>=76&&this.eyes<=100){
+}else if(this.hair>=76&&this.hair<=100){
   fill(green);
 }
 
@@ -392,13 +397,13 @@ stroke(landmark);
 //++++++++++++++++++++++++++++++++LIPS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //lip colour change with skin?
 if (this.skin>=0&&this.skin<=25){
-  fill(red);
+  fill(redD);
 }else if(this.skin>=26&&this.skin<=50){
-  fill(cyan);
+  fill(cyanD);
 }else if(this.skin>=51&&this.skin<=75){
-  fill(yellow);
+  fill(yellowD);
 }else if(this.skin>=76&&this.skin<=100){
-  fill(green);
+  fill(greenD);
 }
 
 
@@ -442,7 +447,7 @@ curveVertex(this.rightBrowRidge[0],this.rightBrowRidge[1]);
 // curveVertex(this.rightBrowRidge[0],this.rightBrowRidge[1]);
 endShape(CLOSE);
 
-fill(red);
+fill(lavender);
 ellipse(this.clownNose[0],this.clownNose[1],this.noseS);
 noFill();
 
@@ -468,8 +473,8 @@ endShape(CLOSE);
 //++++++++++++++++++++++++++++++EYEBROWS++++++++++++++++++++++++++++++
 //left_eyebrow 17-21  ,,  right_eyebrow 22-26
 //colour change with hair colour too??
-
-strokeWeight(this.brows);
+this.fixbrow = map(this.brows, 0, 100, 0.02, 0.2)
+strokeWeight(this.fixbrow);
 
 this.leftEB = positions.left_eyebrow[0];//---------------left
 this.leftEBOne = positions.left_eyebrow[1];
@@ -561,7 +566,7 @@ this.clownGreen = positions.chin[15];
     this.eyes = map(settings[0],0,100,0,100);
     this.hair = map(settings[1],0,100,0,100);
     this.skin = map(settings[2],0,100,0,100);
-    this.brows =map(settings[3],0,100,0.02,0.2,);
+    this.brows =map(settings[3],0,100,0.02,0.2);
     this.noseS =map(settings[4],0,100,0.5,1);
     this.dimples = map(settings[5],0,100,0,50);
     this.crosshatch = map(settings[6],0,100,120,255);
@@ -579,7 +584,7 @@ this.clownGreen = positions.chin[15];
     settings[0]=map(this.eyes,0,100,0,100);
     settings[1]=map(this.hair,0,100,0,100);
     settings[2]=map(this.skin,0,100,0,100);
-    settings[3]=map(this.brows,1,5,0,100);
+    settings[3]=map(this.brows,0.02,0.2,0,100);
     settings[4]=map(this.noseS,0.5,1,0,100);
     settings[5]=map(this.dimples,0,50,0,100);
     settings[6]=map(this.crosshatch,0,255,0,100);
