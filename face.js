@@ -119,7 +119,7 @@ this.chinCheekL = positions.chin[7];
 this.chinChinL = positions.chin[6];
 
 this.differenceLeft = this.lowCheekboneL[0]-this.chinChinL[0];
-this.LeftTrans = map(this.differenceLeft,0,0.65,255,00);
+this.LeftTrans = map(this.differenceLeft,0,0.65,255,0);
 
 fill(100,this.crosshatch,100,this.LeftTrans);
 
